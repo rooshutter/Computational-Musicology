@@ -1,8 +1,10 @@
 # Computational-Musicology
 
 - What is your corpus, why did you choose it, and what do you think is interesting about it?
+I chose a shared playlist between my siblings and I, called 'On the road (again)'. This is a playlist we used on vacation last year. Since my siblings and I all have a different taste in music, does this playlist contain different kinds of music. I think it will be interesting to analyse this playlist.
 
 - What are the natural groups or comparison points in your corpus (e.g., albums, artists, genres, people)? What do you expect to be different among these groups, what do you expect to be the same, and what are you unsure about?
+The groups are the different people adding songs to the playlist, genres and artists. I think there will be differences between the genres, similarities between the people and I'm unsure about the artists.
 
 - How representative are the tracks in your corpus for the groups you want to compare? For example, is there a well-known difference between the live and studio versions of one of the artists, or is Spotify missing an important recording? Or if you are using a personal playlist of yourself or someone else, what percentage of your or their music listening takes place on Spotify? If your corpus is genre-based, how well do you think it covers the genre you are interested in, and what do you think are the most important gaps? There is no such thing as a perfect corpus, and it is important to think from the beginning about its strengths and limitations.
 
