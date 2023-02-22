@@ -48,35 +48,22 @@ For this computational musicological analysis I'm going to use a shared playlist
 
 ```
 
-### Visualisation
+### Visualisation 1
 
 ```{r}
-
-ggplot(otra, aes(x = valence, y = energy)) + 
-  geom_jitter() + 
-  geom_smooth() +
-  facet_wrap(~ added_by.id) +
-  labs(x = "Valence", y = "Energy") +
-  theme_light()
-
-otra_mean_median <- otra %>%
-  group_by(added_by.id) %>%
-  summarize(mean_energy = mean(energy),
-            mean_valence = mean(valence),
-            mean_acousticness = mean(acousticness),
-            mean_loudness = mean(loudness),
-            mean_tempo = mean(loudness),
-            median_energy = median(energy),
-            median_valence = median(valence),
-            median_acousticness = median(acousticness),
-            median_loudness = median(loudness),
-            median_tempo = median(tempo))
 
 ggplot(otra, aes(x=added_by.id, y=acousticness)) +
   geom_boxplot() +
   labs(x = '', y = "Acousticness") +
   theme_light()
+```
 
+***
+Energy_Valence_mode.png contains information about the energy, valence and mode of the songs added by Julia, Willemijn and Roos. I think it's interesting that the energy of most songs are high. However you can see that Willemijn has the most songs with high energy, which I expected. Another interesting point is that Julia and Willemijn have similarities between energy, valence and mode, their plot looks kind of the same. However mine (Roos) looks very different, my songs are more spread out and have less energy. 
+
+### Visualisation 2
+
+```{r}
 otra |>                    # Start with awards.
   mutate(
     mode = ifelse(mode == 0, "Minor", "Major")
@@ -119,8 +106,11 @@ otra |>                    # Start with awards.
   )
 
 
-
 ```
+
+***
+Acousticness.png is a boxplot about the acousticness of the songs added by Julia, Willemijn and Roos. You can clearly see that I have songs which are the most acoustic. It's interesting to see that Julia and Willemijn have similar acousticness.
+
 
 ### Conclusion
 
