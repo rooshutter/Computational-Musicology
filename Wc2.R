@@ -1,0 +1,2 @@
+library(flexdashboard)
+library(Cairo)
