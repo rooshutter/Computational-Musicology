@@ -17,6 +17,7 @@ library(lubridate)
 library(plotly)
 library(spotifyr)
 library(Cairo)
+library(compmus)
 
 Sys.setenv(SPOTIFY_CLIENT_ID = 'c6d2017616c34106a1b1c8407f7fbc6e')
 Sys.setenv(SPOTIFY_CLIENT_SECRET = '1bee2b2375da4f9a9332a114d31d0da7')
@@ -39,6 +40,8 @@ otra_r <- otra1 %>%
 otra <- rbind(head(otra_r, 52), otra_w, head(otra_j, 52))
 ```
 
+Portfolio {.storyboard}
+=========================================
 
 ### Introduction
 
@@ -111,6 +114,33 @@ otra |>                    # Start with awards.
 ***
 Acousticness.png is a boxplot about the acousticness of the songs added by Julia, Willemijn and Roos. You can clearly see that I have songs which are the most acoustic. It's interesting to see that Julia and Willemijn have similar acousticness.
 
+### Visualisation 3
+```{r}
+wood <-
+  get_tidy_audio_analysis("6IQILcYkN2S2eSu5IHoPEH") |>
+  select(segments) |>
+  unnest(segments) |>
+  select(start, duration, pitches)
+
+wood |>
+  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) |>
+  compmus_gather_chroma() |> 
+  ggplot(
+    aes(
+      x = start + duration / 2,
+      width = duration,
+      y = pitch_class,
+      fill = value
+    )
+  ) +
+  geom_tile() +
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  theme_minimal() +
+  scale_fill_viridis_c()
+
+```
+
+***
 
 ### Conclusion
 
@@ -119,3 +149,6 @@ Acousticness.png is a boxplot about the acousticness of the songs added by Julia
 
 
 ```
+
+Details
+=========================================
