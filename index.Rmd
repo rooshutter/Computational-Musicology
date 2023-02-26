@@ -55,10 +55,12 @@ For this computational musicological analysis I'm going to use a shared playlist
 
 ```{r}
 
-ggplot(otra, aes(x=added_by.id, y=acousticness)) +
+plot_acousticness <- ggplot(otra, aes(x=added_by.id, y=acousticness)) +
   geom_boxplot() +
   labs(x = '', y = "Acousticness") +
   theme_light()
+
+ggplotly(plot_acousticness)
 
 ```
 
@@ -68,11 +70,12 @@ Energy_Valence_mode.png contains information about the energy, valence and mode 
 ### Visualisation 2
 
 ```{r}
-otra |>                    # Start with awards.
+otra_evm <- otra %>%
   mutate(
     mode = ifelse(mode == 0, "Minor", "Major")
-  ) |>
-  ggplot(                     # Set up the plot.
+  )
+
+plot_evm <- ggplot(otra_evm,
     aes(
       x = valence,
       y = energy,
@@ -109,7 +112,7 @@ otra |>                    # Start with awards.
     title = "On the road (again) analysis"
   )
 
-
+ggplotly(plot_evm)
 ```
 
 ***
@@ -117,16 +120,18 @@ Acousticness.png is a boxplot about the acousticness of the songs added by Julia
 
 ### Visualisation 3
 ```{r}
-wood <-
+chroma <-
   get_tidy_audio_analysis("6IQILcYkN2S2eSu5IHoPEH") |>
   select(segments) |>
   unnest(segments) |>
   select(start, duration, pitches)
 
-wood |>
-  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) |>
-  compmus_gather_chroma() |> 
-  ggplot(
+chroma <- chroma %>%
+  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) %>%
+  compmus_gather_chroma() 
+  
+plot_chroma <-
+  ggplot(chroma,
     aes(
       x = start + duration / 2,
       width = duration,
@@ -139,6 +144,7 @@ wood |>
   theme_minimal() +
   scale_fill_viridis_c()
 
+ggplotly(plot_chroma)
 ```
 
 ***
