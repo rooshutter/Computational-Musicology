@@ -59,6 +59,7 @@ ggplot(otra, aes(x=added_by.id, y=acousticness)) +
   geom_boxplot() +
   labs(x = '', y = "Acousticness") +
   theme_light()
+
 ```
 
 ***
