@@ -91,13 +91,13 @@ otra |>                    # Start with awards.
   )
 
 wood <-
-  get_tidy_audio_analysis("4XURqWF7mq3aW5iee3ATwD") |>
+  get_tidy_audio_analysis("1z6WtY7X4HQJvzxC4UgkSf") |>
   select(segments) |>
   unnest(segments) |>
   select(start, duration, pitches)
 
 wood |>
-  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) |>
+  mutate(pitches = map(pitches, compmus_normalise, "chebyshev")) |>
   compmus_gather_chroma() |> 
   ggplot(
     aes(
