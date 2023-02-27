@@ -42,22 +42,23 @@ otra_r <- otra1 %>%
 otra <- rbind(head(otra_r, 52), otra_w, head(otra_j, 52))
 ```
 
-Portfolio {.storyboard}
-=========================================
+### Introduction to the 'On the road (again)' corpus
+For this computational musicological analysis I'm going to use a shared playlist between my sisters and I, called 'On the road (again)'. Down below you can see a picture of Julia, Willemijn and me (Roos). This playlist was used on vacation last year to combine our different tastes in music. Therefore the focus will be on the differences and similarities between the songs each of us put in the playlist. I think it will be interesting to analyze the different genres of the songs. Additionally, the energy the songs have is an interesting aspect to look more into. Because they are my sister, I already have some speculations about these differences. However, it still will be worth looking into. I expect the artists and release dates of the songs the be different. Also, the similarities between the songs will be interesting to discover. Since this playlist was made to listen to during car rides, I expect the songs to have somewhat of a similar sound. Furthermore, my sisters and I do influence each others music taste a little bit. I hope to discover more about who influences who and in what way exactly.
 
-### Introduction
+***
+![Julia](Julia.jpeg){width=150} 
 
-For this computational musicological analysis I'm going to use a shared playlist between my sisters and I, called 'On the road (again)'. This playlist was used on vacation last year to combine our different tastes in music. Therefore the focus will be on the differences and similarities between the songs each of us put in the playlist. I think it will be interesting to analyze the different genres of the songs. Additionally, the energy the songs have is an interesting aspect to look more into. Because they are my sister, I already have some speculations about these differences. However, it still will be worth looking into. I expect the artists and release dates of the songs the be different. Also, the similarities between the songs will be interesting to discover. Since this playlist was made to listen to during car rides, I expect the songs to have somewhat of a similar sound. Furthermore, my sisters and I do influence each others music taste a little bit. I hope to discover more about who influences who and in what way exactly.
+![Willemijn](Willemijn.png){width=150} 
 
-![](Julia.jpeg){width=200} ![](Willemijn.png){width=200} ![](Roos.jpeg){width=200}
+![Roos](Roos.jpeg){width=150}
 
-### Visualisation 1
+### Visualisation of the Acousticness
 
 ```{r}
 
 plot_acousticness <- ggplot(otra, aes(x=added_by.id, y=acousticness)) +
   geom_boxplot() +
-  labs(x = '', y = "Acousticness") +
+  labs(x = '', y = "Acousticness", title = "Acousticness") +
   theme_light()
 
 ggplotly(plot_acousticness)
@@ -65,9 +66,9 @@ ggplotly(plot_acousticness)
 ```
 
 ***
-Energy_Valence_mode.png contains information about the energy, valence and mode of the songs added by Julia, Willemijn and Roos. I think it's interesting that the energy of most songs are high. However you can see that Willemijn has the most songs with high energy, which I expected. Another interesting point is that Julia and Willemijn have similarities between energy, valence and mode, their plot looks kind of the same. However mine (Roos) looks very different, my songs are more spread out and have less energy. 
+This plot is a boxplot about the acousticness of the songs added by Julia, Willemijn and Roos. You can clearly see that I have songs which are the most acoustic. It's interesting to see that Julia and Willemijn have similar acousticness.
 
-### Visualisation 2
+### Visualisation of the Energy, Valence and Mode
 
 ```{r}
 otra_evm <- otra %>%
@@ -109,19 +110,19 @@ plot_evm <- ggplot(otra_evm,
     x = "Valence",
     y = "Energy",
     colour = "Mode",
-    title = "On the road (again) analysis"
+    title = "Energy, Valence and Mode"
   )
 
 ggplotly(plot_evm)
 ```
 
 ***
-Acousticness.png is a boxplot about the acousticness of the songs added by Julia, Willemijn and Roos. You can clearly see that I have songs which are the most acoustic. It's interesting to see that Julia and Willemijn have similar acousticness.
+This plot contains information about the energy, valence and mode of the songs added by Julia, Willemijn and Roos. I think it's interesting that the energy of most songs are high. However you can see that Willemijn has the most songs with high energy, which I expected. Another interesting point is that Julia and Willemijn have similarities between energy, valence and mode, their plot looks kind of the same. However mine (Roos) looks very different, my songs are more spread out and have less energy. 
 
-### Visualisation 3
+### Chromagrams of two versions of Crazy Little Thing Called Love
 ```{r}
 chroma <-
-  get_tidy_audio_analysis("6IQILcYkN2S2eSu5IHoPEH") |>
+  get_tidy_audio_analysis("5aYJ6gZyTFxZPAyTRRWKxP") |>
   select(segments) |>
   unnest(segments) |>
   select(start, duration, pitches)
@@ -144,16 +145,47 @@ plot_chroma <-
   theme_minimal() +
   scale_fill_viridis_c()
 
-ggplotly(plot_chroma)
+chroma2 <-
+  get_tidy_audio_analysis("6xdLJrVj4vIXwhuG8TMopk") |>
+  select(segments) |>
+  unnest(segments) |>
+  select(start, duration, pitches)
+
+chroma2 <- chroma2 %>%
+  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) %>%
+  compmus_gather_chroma() 
+  
+plot_chroma2 <-
+  ggplot(chroma2,
+    aes(
+      x = start + duration / 2,
+      width = duration,
+      y = pitch_class,
+      fill = value
+    )
+  ) +
+  geom_tile() +
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  theme_minimal() +
+  scale_fill_viridis_c()
+
+subplot(plot_chroma, plot_chroma2, nrows = 2, margin = 0.04, heights = c(0.5, 0.5)) %>% layout(annotations = 
+list(list(x = 0.5,  y = 1.0,  
+          text = "Crazy Little Thing Called Love - Acoustic Version - Maroon 5",   
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE ),        list(x = 0.5, y = 0.45,  
+          text = "Crazy Little Thing Called Love - Remastered 2011 - Queen",   
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE )))
+
 ```
 
 ***
-
-### Conclusion
-
-```{r}
-
-
-
-```
+These are two chromagrams of the same song 'Crazy Little Thing Called Love', however one is sung by Maroon 5 and the other by Queen. The one from Maroon 5 is added by me and the one from Queen is added by Julia. In the beginning, the Maroon 5 one is a lot in pitch class A and Queen is a lot in D. However, around 50 there is a similar pattern in pitch class E for both songs. 
 
