@@ -42,35 +42,15 @@ otra_r <- otra1 %>%
 otra <- rbind(head(otra_r, 52), otra_w, head(otra_j, 52))
 ```
 
-### Chroma vs timbre {data-commentary-width=550}
+### Chroma vs Timbre of Acid Tears - Culi.
 ```{r}
 at_chroma <-
   get_tidy_audio_analysis("5YCXiEpUqblYW5x9vWx8Qd") |>
   select(segments) |>
   unnest(segments) |>
-  select(start, duration, pitches) |>
-  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) |>
+  select(start, duration, pitches) %>%
+  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) %>%
   compmus_gather_chroma() 
-
-at_timbre <-
-  get_tidy_audio_analysis("5YCXiEpUqblYW5x9vWx8Qd") |> 
-  compmus_align(bars, segments) |>                     `
-  select(bars) |>                                      
-  unnest(bars) |>                                      
-  mutate(
-    pitches =
-      map(segments,
-          compmus_summarise, pitches,
-          method = "rms", norm = "euclidean"              
-      )
-  ) |>
-  mutate(
-    timbre =
-      map(segments,
-          compmus_summarise, timbre,
-          method = "rms", norm = "euclidean"              
-      )
-  ) %>% compmus_gather_timbre()
 
 plot_at_chroma <-
   ggplot(at_chroma,
@@ -82,9 +62,29 @@ plot_at_chroma <-
          )
   ) +
   geom_tile() +
-  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  labs(x = "Chroma", y = NULL, fill = "Magnitude") +
   theme_minimal() +
-  scale_fill_viridis_c()
+  scale_fill_viridis_c() 
+
+at_timbre <-
+  get_tidy_audio_analysis("5YCXiEpUqblYW5x9vWx8Qd") |> # Change URI.
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+          compmus_summarise, pitches,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+          compmus_summarise, timbre,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  ) |> compmus_gather_timbre()
 
 plot_at_timbre <-
   ggplot(at_timbre,
@@ -96,12 +96,16 @@ plot_at_timbre <-
     )
   ) +
   geom_tile() +
-  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  labs(x = "Timbre", y = NULL, fill = "Magnitude") +
   scale_fill_viridis_c() +                              
   theme_classic()
 
-
+fig <- subplot(plot_at_chroma, plot_at_timbre) %>% 
+  layout(title = 'Chroma and Timbre of Acid Tears - Culi.')
+fig
 ```
+*** 
+These plots show the chroma (left) and timbre (right) of the song 'Acid Tears' by 'Culi.'. It was added by me. The song is pretty consistent till about 2.45. This is shown well in the chromagram, at 165 the chroma changes. Before this point it was mostly C#, and after it is higher and switches between A#, G#, F# and F. This switch is also seen in the timbre, at the end the c02 is present.
 
 ### Introduction to the 'On the road (again)' corpus 
 For this computational musicological analysis I'm going to use a shared playlist between my sisters and I, called 'On the road (again)'. Down below you can see a picture of Julia, Willemijn and me (Roos). This playlist was used on vacation last year to combine our different tastes in music. Therefore the focus will be on the differences and similarities between the songs each of us put in the playlist. I think it will be interesting to analyze the different genres of the songs. Additionally, the energy the songs have is an interesting aspect to look more into. Because they are my sister, I already have some speculations about these differences. However, it still will be worth looking into. I expect the artists and release dates of the songs the be different. Also, the similarities between the songs will be interesting to discover. Since this playlist was made to listen to during car rides, I expect the songs to have somewhat of a similar sound. Furthermore, my sisters and I do influence each others music taste a little bit. I hope to discover more about who influences who and in what way exactly.
