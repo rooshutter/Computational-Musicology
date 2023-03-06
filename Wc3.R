@@ -1,30 +1,52 @@
 library(tidyverse)
 library(spotifyr)
 library(compmus)
+library(plotly)
 
-bzt <-
-  get_tidy_audio_analysis("5YCXiEpUqblYW5x9vWx8Qd") |> # Change URI.
-  compmus_align(bars, segments) |>                     # Change `bars`
-  select(bars) |>                                      #   in all three
-  unnest(bars) |>                                      #   of these lines.
+at_chroma <-
+  get_tidy_audio_analysis("5YCXiEpUqblYW5x9vWx8Qd") |>
+  select(segments) |>
+  unnest(segments) |>
+  select(start, duration, pitches) |>
+  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) |>
+  compmus_gather_chroma() 
+
+at_timbre <-
+  get_tidy_audio_analysis("5YCXiEpUqblYW5x9vWx8Qd") |> 
+  compmus_align(bars, segments) |>                     `
+  select(bars) |>                                      
+  unnest(bars) |>                                      
   mutate(
     pitches =
       map(segments,
           compmus_summarise, pitches,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
+          method = "rms", norm = "euclidean"              
       )
   ) |>
   mutate(
     timbre =
       map(segments,
           compmus_summarise, timbre,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
+          method = "rms", norm = "euclidean"              
       )
-  )
+  ) %>% compmus_gather_timbre()
 
-bzt |>
-  compmus_gather_timbre() |>
-  ggplot(
+plot_at_chroma <-
+  ggplot(at_chroma,
+         aes(
+           x = start + duration / 2,
+           width = duration,
+           y = pitch_class,
+           fill = value
+         )
+  ) +
+  geom_tile() +
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  theme_minimal() +
+  scale_fill_viridis_c()
+
+plot_at_timbre <-
+  ggplot(at_timbre,
     aes(
       x = start + duration / 2,
       width = duration,
@@ -37,19 +59,27 @@ bzt |>
   scale_fill_viridis_c() +                              
   theme_classic()
 
-bzt |>
-  compmus_self_similarity(timbre, "cosine") |> 
-  ggplot(
-    aes(
-      x = xstart + xduration / 2,
-      width = xduration,
-      y = ystart + yduration / 2,
-      height = yduration,
-      fill = d
-    )
+chroma <-
+  get_tidy_audio_analysis("5YCXiEpUqblYW5x9vWx8Qd") |>
+  select(segments) |>
+  unnest(segments) |>
+  select(start, duration, pitches)
+
+chroma <- chroma %>%
+  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) %>%
+  compmus_gather_chroma() 
+
+plot_chroma <-
+  ggplot(chroma,
+         aes(
+           x = start + duration / 2,
+           width = duration,
+           y = pitch_class,
+           fill = value
+         )
   ) +
   geom_tile() +
-  coord_fixed() +
-  scale_fill_viridis_c(guide = "none") +
-  theme_classic() +
-  labs(x = "", y = "")
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  theme_minimal() +
+  scale_fill_viridis_c()
+
