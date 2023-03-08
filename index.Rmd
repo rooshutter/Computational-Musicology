@@ -45,9 +45,12 @@ otra <- rbind(head(otra_r, 52), otra_w, head(otra_j, 52))
 
 Column {data-width=800}
 -----------------------------------------------------------------------
+### Introduction to the corpus
 
-### Introduction to the 'On the road (again)' corpus 
+**The 'On the road (again)' corpus**
 For this computational musicological analysis I'm going to use a shared playlist between my sisters and I, called 'On the road (again)'. Down below you can see a picture of Julia, Willemijn and me (Roos). This playlist was used on vacation last year to combine our different tastes in music. Therefore the focus will be on the differences and similarities between the songs each of us put in the playlist. I think it will be interesting to analyze the different genres of the songs. Additionally, the energy the songs have is an interesting aspect to look more into. Because they are my sister, I already have some speculations about these differences. However, it still will be worth looking into. I expect the artists and release dates of the songs the be different. Also, the similarities between the songs will be interesting to discover. Since this playlist was made to listen to during car rides, I expect the songs to have somewhat of a similar sound. Furthermore, my sisters and I do influence each others music taste a little bit. I hope to discover more about who influences who and in what way exactly.
+
+
 
 Column {data-width=200}
 -----------------------------------------------------------------------
@@ -62,7 +65,7 @@ Column {data-width=200}
 
 # Visualisations {.storyboard}
 
-### Chroma vs Timbre of Acid Tears - Culi.
+### Chroma vs Timbre of Acid Tears - Culi. {data-commentary-width=300}
 ```{r}
 at_chroma <-
   get_tidy_audio_analysis("5YCXiEpUqblYW5x9vWx8Qd") |>
@@ -193,7 +196,7 @@ ggplotly(plot_evm)
 This plot contains information about the energy, valence and mode of the songs added by Julia, Willemijn and Roos. I think it's interesting that the energy of most songs are high. However you can see that Willemijn has the most songs with high energy, which I expected. Another interesting point is that Julia and Willemijn have similarities between energy, valence and mode, their plot looks kind of the same. However mine (Roos) looks very different, my songs are more spread out and have less energy. 
 
 ### Chromagrams of two versions of Crazy Little Thing Called Love
-```{r}
+```{r, out.width="40%"}
 chroma <-
   get_tidy_audio_analysis("5aYJ6gZyTFxZPAyTRRWKxP") |>
   select(segments) |>
@@ -240,7 +243,8 @@ plot_chroma2 <-
   geom_tile() +
   labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
   theme_minimal() +
-  scale_fill_viridis_c()
+  scale_fill_viridis_c() + 
+  theme(legend.position = "none") 
 
 subplot(plot_chroma, plot_chroma2, nrows = 2, margin = 0.04, heights = c(0.5, 0.5)) %>% layout(annotations = 
 list(list(x = 0.5,  y = 1.0,  
@@ -259,7 +263,7 @@ list(list(x = 0.5,  y = 1.0,
 
 ```
 
-***
+--- 
 These are two chromagrams of the same song 'Crazy Little Thing Called Love', however one is sung by Maroon 5 and the other by Queen. The one from Maroon 5 is added by me and the one from Queen is added by Julia. In the beginning, the Maroon 5 one is a lot in pitch class A and Queen is a lot in D. However, around 50 there is a similar pattern in pitch class E for both songs. 
 
 # Conclusion
