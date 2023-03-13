@@ -70,7 +70,7 @@ Column {data-width=200}
 # Visualisations {.storyboard}
 
 ### Chordogram
-```{r, fig.cap=paste("Your caption.")}
+```{r}
 circshift <- function(v, n) {
   if (n == 0) v else c(tail(v, n), head(v, -n))
 }
@@ -216,6 +216,8 @@ grid.arrange(queen_plot, phil_plot, ncol = 1)
 
 ```
 
+***
+These are chordograms of Good Old-Fashioned Lover Boy by Queen and Son of Man by Phil Collins.
 
 ### Chroma vs Timbre of Acid Tears - Culi. {data-commentary-width=300}
 ```{r}
