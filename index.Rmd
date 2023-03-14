@@ -5,7 +5,7 @@ date: "2023-02-22"
 output: 
   flexdashboard::flex_dashboard:
     storyboard: true
-    theme: flatly
+    theme: flatly 
     
 ---
 
@@ -45,16 +45,18 @@ otra_r <- otra1 %>%
 
 otra <- rbind(head(otra_r, 52), otra_w, head(otra_j, 52))
 ```
-# Introduction
+
+Introduction
+=========================================
 
 Column {data-width=800}
------------------------------------------------------------------------
-### Introduction to the corpus
+-------------------------------------
+
+### .
 
 **The 'On the road (again)' corpus**
+
 For this computational musicological analysis I'm going to use a shared playlist between my sisters and I, called 'On the road (again)'. Down below you can see a picture of Julia, Willemijn and me (Roos). This playlist was used on vacation last year to combine our different tastes in music. Therefore the focus will be on the differences and similarities between the songs each of us put in the playlist. I think it will be interesting to analyze the different genres of the songs. Additionally, the energy the songs have is an interesting aspect to look more into. Because they are my sister, I already have some speculations about these differences. However, it still will be worth looking into. I expect the artists and release dates of the songs the be different. Also, the similarities between the songs will be interesting to discover. Since this playlist was made to listen to during car rides, I expect the songs to have somewhat of a similar sound. Furthermore, my sisters and I do influence each others music taste a little bit. I hope to discover more about who influences who and in what way exactly.
-
-
 
 Column {data-width=200}
 -----------------------------------------------------------------------
