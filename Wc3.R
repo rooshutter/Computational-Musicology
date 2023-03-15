@@ -3,62 +3,46 @@ library(spotifyr)
 library(compmus)
 library(plotly)
 
-at_chroma <-
-  get_tidy_audio_analysis("5YCXiEpUqblYW5x9vWx8Qd") |>
-  select(segments) |>
-  unnest(segments) |>
-  select(start, duration, pitches) %>%
-  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) %>%
-  compmus_gather_chroma() 
-
-plot_at_chroma <-
-  ggplot(at_chroma,
-         aes(
-           x = start + duration / 2,
-           width = duration,
-           y = pitch_class,
-           fill = value
-         )
-  ) +
-  geom_tile() +
-  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
-  theme_minimal() +
-  scale_fill_viridis_c()
-
-at_timbre <-
-  get_tidy_audio_analysis("5YCXiEpUqblYW5x9vWx8Qd") |> # Change URI.
-  compmus_align(bars, segments) |>                     # Change `bars`
-  select(bars) |>                                      #   in all three
-  unnest(bars) |>                                      #   of these lines.
+bzt <-
+  get_tidy_audio_analysis("5ZLkc5RY1NM4FtGWEd6HOE") |>
+  compmus_align(bars, segments) |>
+  select(bars) |>
+  unnest(bars) |>
   mutate(
     pitches =
       map(segments,
           compmus_summarise, pitches,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
+          method = "acentre", norm = "manhattan"
       )
   ) |>
   mutate(
     timbre =
       map(segments,
           compmus_summarise, timbre,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
+          method = "mean"
       )
-  ) |> compmus_gather_timbre()
-
-plot_at_timbre <-
-  ggplot(at_timbre,
+  )
+bind_rows(
+  bzt |> 
+    compmus_self_similarity(pitches, "aitchison") |> 
+    mutate(d = d / max(d), type = "Chroma"),
+  bzt |> 
+    compmus_self_similarity(timbre, "euclidean") |> 
+    mutate(d = d / max(d), type = "Timbre")
+) |>
+  mutate() |> 
+  ggplot(
     aes(
-      x = start + duration / 2,
-      width = duration,
-      y = basis,
-      fill = value
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
     )
   ) +
   geom_tile() +
-  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
-  scale_fill_viridis_c() +                              
-  theme_classic()
-
-fig <- subplot(plot_at_chroma, plot_at_timbre) %>% 
-  layout(title = 'Chroma and Timbre of Acid Tears - Culi.')
-fig
+  coord_fixed() +
+  facet_wrap(~type) +
+  scale_fill_viridis_c(option = "E", guide = "none") +
+  theme_classic() + 
+  labs(x = "", y = "")

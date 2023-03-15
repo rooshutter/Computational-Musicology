@@ -3,6 +3,7 @@ title: "Portfolio"
 author: "Roos Hutter"
 date: "2023-02-22"
 output: 
+  self_contained: false
   flexdashboard::flex_dashboard:
     storyboard: true
     theme: flatly 
@@ -57,6 +58,8 @@ Column {data-width=800}
 **The 'On the road (again)' corpus**
 
 For this computational musicological analysis I'm going to use a shared playlist between my sisters and I, called 'On the road (again)'. Down below you can see a picture of Julia, Willemijn and me (Roos). This playlist was used on vacation last year to combine our different tastes in music. Therefore the focus will be on the differences and similarities between the songs each of us put in the playlist. I think it will be interesting to analyze the different genres of the songs. Additionally, the energy the songs have is an interesting aspect to look more into. Because they are my sister, I already have some speculations about these differences. However, it still will be worth looking into. I expect the artists and release dates of the songs the be different. Also, the similarities between the songs will be interesting to discover. Since this playlist was made to listen to during car rides, I expect the songs to have somewhat of a similar sound. Furthermore, my sisters and I do influence each others music taste a little bit. I hope to discover more about who influences who and in what way exactly.
+
+<iframe src="https://open.spotify.com/playlist/6cZQQaJ0MsSHyUfGyuLgGK?si=1e4b6ce1b983400a" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
 Column {data-width=200}
 -----------------------------------------------------------------------
@@ -219,7 +222,10 @@ grid.arrange(queen_plot, phil_plot, ncol = 1)
 ```
 
 ***
-These are chordograms of Good Old-Fashioned Lover Boy by Queen and Son of Man by Phil Collins.
+These are chordograms of Good Old-Fashioned Lover Boy by Queen and Son of Man by Phil Collins
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/5A0JhLTAvwCed9HIP66X7u?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
 
 ### Chroma vs Timbre of Acid Tears - Culi. {data-commentary-width=300}
 ```{r}
@@ -284,7 +290,58 @@ subplot(plot_at_chroma, plot_at_timbre)
 *** 
 These plots show the chroma (left) and timbre (right) of the song 'Acid Tears' by 'Culi.'. It was added by me. The song is pretty consistent till about 2.45. This is shown well in the chromagram, at 165 the chroma changes. Before this point it was mostly C#, and after it is higher and switches between A#, G#, F# and F. This switch is also seen in the timbre, at the end the c02 is present.
 
-### Visualisation of the Acousticness
+### Self-similarity matrices of Acid Tears - Culi. {data-commentary-width=300}
+```{r}
+bzt <-
+  get_tidy_audio_analysis("5YCXiEpUqblYW5x9vWx8Qd") |>
+  compmus_align(bars, segments) |>
+  select(bars) |>
+  unnest(bars) |>
+  mutate(
+    pitches =
+      map(segments,
+        compmus_summarise, pitches,
+        method = "acentre", norm = "manhattan"
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+        compmus_summarise, timbre,
+        method = "mean"
+      )
+  )
+
+bind_rows(
+  bzt |> 
+    compmus_self_similarity(pitches, "aitchison") |> 
+    mutate(d = d / max(d), type = "Chroma"),
+  bzt |> 
+    compmus_self_similarity(timbre, "euclidean") |> 
+    mutate(d = d / max(d), type = "Timbre")
+) |>
+  mutate() |> 
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  facet_wrap(~type) +
+  scale_fill_viridis_c(option = "E", guide = "none") +
+  theme_classic() + 
+  labs(x = "", y = "", title="Self-similarity matrices")
+```
+
+***
+These are self-similarity matrices of chroma and timbre of Acid Tears by Culi.. 
+
+### Visualisation of the Acousticness {data-commentary-width=300}
 
 ```{r}
 
@@ -300,7 +357,7 @@ ggplotly(plot_acousticness)
 ***
 This plot is a boxplot about the acousticness of the songs added by Julia, Willemijn and Roos. You can clearly see that I have songs which are the most acoustic. It's interesting to see that Julia and Willemijn have similar acousticness.
 
-### Visualisation of the Energy, Valence and Mode
+### Visualisation of the Energy, Valence and Mode {data-commentary-width=300}
 
 ```{r}
 otra_evm <- otra %>%
@@ -351,7 +408,7 @@ ggplotly(plot_evm)
 ***
 This plot contains information about the energy, valence and mode of the songs added by Julia, Willemijn and Roos. I think it's interesting that the energy of most songs are high. However you can see that Willemijn has the most songs with high energy, which I expected. Another interesting point is that Julia and Willemijn have similarities between energy, valence and mode, their plot looks kind of the same. However mine (Roos) looks very different, my songs are more spread out and have less energy. 
 
-### Chromagrams of two versions of Crazy Little Thing Called Love
+### Chromagrams of two versions of Crazy Little Thing Called Love {data-commentary-width=300}
 ```{r, out.width="40%"}
 chroma <-
   get_tidy_audio_analysis("5aYJ6gZyTFxZPAyTRRWKxP") |>
@@ -420,6 +477,6 @@ list(list(x = 0.5,  y = 1.0,
 ```
 
 --- 
-These are two chromagrams of the same song 'Crazy Little Thing Called Love', however one is sung by Maroon 5 and the other by Queen. The one from Maroon 5 is added by me and the one from Queen is added by Julia. In the beginning, the Maroon 5 one is a lot in pitch class A and Queen is a lot in D. However, around 50 there is a similar pattern in pitch class E for both songs. 
+These are two chromagrams of the same song 'Crazy Little Thing Called Love', however one is sung by Maroon 5 and the other by Queen. The one from Maroon 5 is added by me and the one from Queen is added by Julia. In the beginning, the Maroon 5 one is a lot in pitch class A and Queen is a lot in D. However, around 50 there is a similar pattern in pitch class E for both songs.
 
 # Conclusion
