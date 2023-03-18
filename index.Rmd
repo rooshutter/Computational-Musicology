@@ -3,7 +3,6 @@ title: "Portfolio"
 author: "Roos Hutter"
 date: "2023-02-22"
 output: 
-  self_contained: false
   flexdashboard::flex_dashboard:
     storyboard: true
     theme: flatly 
@@ -24,27 +23,9 @@ library(compmus)
 library(grid)
 library(gridExtra)
 
+otra <- readRDS(file = "data/otra-data.RDS")
+
 knitr::opts_chunk$set(echo=FALSE)
-
-Sys.setenv(SPOTIFY_CLIENT_ID = 'c6d2017616c34106a1b1c8407f7fbc6e')
-Sys.setenv(SPOTIFY_CLIENT_SECRET = '1bee2b2375da4f9a9332a114d31d0da7')
-access_token <- get_spotify_access_token()
-
-otra1 <- get_playlist_audio_features("", "6cZQQaJ0MsSHyUfGyuLgGK")
-
-otra_j <- otra1 %>%
-  filter(added_by.id == '1153531084') %>%
-  mutate(added_by.id = "Julia")
-
-otra_w <- otra1 %>%
-  filter(added_by.id == '1168120441') %>%
-  mutate(added_by.id = "Willemijn")
-
-otra_r <- otra1 %>%
-  filter(added_by.id == 'roos.hutter') %>%
-  mutate(added_by.id = "Roos")
-
-otra <- rbind(head(otra_r, 52), otra_w, head(otra_j, 52))
 ```
 
 Introduction
@@ -58,8 +39,6 @@ Column {data-width=800}
 **The 'On the road (again)' corpus**
 
 For this computational musicological analysis I'm going to use a shared playlist between my sisters and I, called 'On the road (again)'. Down below you can see a picture of Julia, Willemijn and me (Roos). This playlist was used on vacation last year to combine our different tastes in music. Therefore the focus will be on the differences and similarities between the songs each of us put in the playlist. I think it will be interesting to analyze the different genres of the songs. Additionally, the energy the songs have is an interesting aspect to look more into. Because they are my sister, I already have some speculations about these differences. However, it still will be worth looking into. I expect the artists and release dates of the songs the be different. Also, the similarities between the songs will be interesting to discover. Since this playlist was made to listen to during car rides, I expect the songs to have somewhat of a similar sound. Furthermore, my sisters and I do influence each others music taste a little bit. I hope to discover more about who influences who and in what way exactly.
-
-<iframe src="https://open.spotify.com/playlist/6cZQQaJ0MsSHyUfGyuLgGK?si=1e4b6ce1b983400a" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
 Column {data-width=200}
 -----------------------------------------------------------------------
@@ -76,146 +55,8 @@ Column {data-width=200}
 
 ### Chordogram
 ```{r}
-circshift <- function(v, n) {
-  if (n == 0) v else c(tail(v, n), head(v, -n))
-}
-
-#      C     C#    D     Eb    E     F     F#    G     Ab    A     Bb    B
-major_chord <-
-  c(   1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    0,    0)
-minor_chord <-
-  c(   1,    0,    0,    1,    0,    0,    0,    1,    0,    0,    0,    0)
-seventh_chord <-
-  c(   1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    1,    0)
-
-major_key <-
-  c(6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88)
-minor_key <-
-  c(6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17)
-
-chord_templates <-
-  tribble(
-    ~name, ~template,
-    "Gb:7", circshift(seventh_chord, 6),
-    "Gb:maj", circshift(major_chord, 6),
-    "Bb:min", circshift(minor_chord, 10),
-    "Db:maj", circshift(major_chord, 1),
-    "F:min", circshift(minor_chord, 5),
-    "Ab:7", circshift(seventh_chord, 8),
-    "Ab:maj", circshift(major_chord, 8),
-    "C:min", circshift(minor_chord, 0),
-    "Eb:7", circshift(seventh_chord, 3),
-    "Eb:maj", circshift(major_chord, 3),
-    "G:min", circshift(minor_chord, 7),
-    "Bb:7", circshift(seventh_chord, 10),
-    "Bb:maj", circshift(major_chord, 10),
-    "D:min", circshift(minor_chord, 2),
-    "F:7", circshift(seventh_chord, 5),
-    "F:maj", circshift(major_chord, 5),
-    "A:min", circshift(minor_chord, 9),
-    "C:7", circshift(seventh_chord, 0),
-    "C:maj", circshift(major_chord, 0),
-    "E:min", circshift(minor_chord, 4),
-    "G:7", circshift(seventh_chord, 7),
-    "G:maj", circshift(major_chord, 7),
-    "B:min", circshift(minor_chord, 11),
-    "D:7", circshift(seventh_chord, 2),
-    "D:maj", circshift(major_chord, 2),
-    "F#:min", circshift(minor_chord, 6),
-    "A:7", circshift(seventh_chord, 9),
-    "A:maj", circshift(major_chord, 9),
-    "C#:min", circshift(minor_chord, 1),
-    "E:7", circshift(seventh_chord, 4),
-    "E:maj", circshift(major_chord, 4),
-    "G#:min", circshift(minor_chord, 8),
-    "B:7", circshift(seventh_chord, 11),
-    "B:maj", circshift(major_chord, 11),
-    "D#:min", circshift(minor_chord, 3)
-  )
-
-key_templates <-
-  tribble(
-    ~name, ~template,
-    "Gb:maj", circshift(major_key, 6),
-    "Bb:min", circshift(minor_key, 10),
-    "Db:maj", circshift(major_key, 1),
-    "F:min", circshift(minor_key, 5),
-    "Ab:maj", circshift(major_key, 8),
-    "C:min", circshift(minor_key, 0),
-    "Eb:maj", circshift(major_key, 3),
-    "G:min", circshift(minor_key, 7),
-    "Bb:maj", circshift(major_key, 10),
-    "D:min", circshift(minor_key, 2),
-    "F:maj", circshift(major_key, 5),
-    "A:min", circshift(minor_key, 9),
-    "C:maj", circshift(major_key, 0),
-    "E:min", circshift(minor_key, 4),
-    "G:maj", circshift(major_key, 7),
-    "B:min", circshift(minor_key, 11),
-    "D:maj", circshift(major_key, 2),
-    "F#:min", circshift(minor_key, 6),
-    "A:maj", circshift(major_key, 9),
-    "C#:min", circshift(minor_key, 1),
-    "E:maj", circshift(major_key, 4),
-    "G#:min", circshift(minor_key, 8),
-    "B:maj", circshift(major_key, 11),
-    "D#:min", circshift(minor_key, 3)
-  )
-
-queen <-
-  get_tidy_audio_analysis("1n7xFAY4xoPeqRvrkzAtsw") |>
-  compmus_align(bars, segments) |>
-  select(bars) |>
-  unnest(bars) |>
-  mutate(
-    pitches =
-      map(segments,
-        compmus_summarise, pitches,
-        method = "mean", norm = "manhattan"
-      )
-  )
-
-queen_plot <- queen |> 
-  compmus_match_pitch_template(
-    chord_templates,         # Change to chord_templates if descired
-    method = "euclidean",  # Try different distance metrics
-    norm = "manhattan"     # Try different norms
-  ) |>
-  ggplot(
-    aes(x = start + duration / 2, width = duration, y = name, fill = d)
-  ) +
-  geom_tile() +
-  scale_fill_viridis_c(guide = "none") +
-  scale_y_discrete(guide = guide_axis(n.dodge=2)) +
-  theme_minimal() +
-  labs(x = "Time (s)", y = "", title="Good Old-Fashioned Lover Boy - Queen") 
-
-phil <-
-  get_tidy_audio_analysis("5A0JhLTAvwCed9HIP66X7u") |>
-  compmus_align(bars, segments) |>
-  select(bars) |>
-  unnest(bars) |>
-  mutate(
-    pitches =
-      map(segments,
-        compmus_summarise, pitches,
-        method = "mean", norm = "manhattan"
-      )
-  )
-phil_plot <- phil |> 
-  compmus_match_pitch_template(
-    chord_templates,         # Change to chord_templates if descired
-    method = "euclidean",  # Try different distance metrics
-    norm = "manhattan"     # Try different norms
-  ) |>
-  ggplot(
-    aes(x = start + duration / 2, width = duration, y = name, fill = d)
-  ) +
-  geom_tile() +
-  scale_fill_viridis_c(guide = "none") +
-  scale_y_discrete(guide = guide_axis(n.dodge=2)) +
-  theme_minimal() +
-  labs(x = "Time (s)", y = "", title="Son of Man - Phil Collins") 
+queen_plot <- readRDS(file = "data/queen_plot.RDS")
+phil_plot <- readRDS(file = "data/phil_plot.RDS")
 
 grid.arrange(queen_plot, phil_plot, ncol = 1)
 
@@ -224,66 +65,11 @@ grid.arrange(queen_plot, phil_plot, ncol = 1)
 ***
 These are chordograms of Good Old-Fashioned Lover Boy by Queen and Son of Man by Phil Collins
 
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/5A0JhLTAvwCed9HIP66X7u?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-
 
 ### Chroma vs Timbre of Acid Tears - Culi. {data-commentary-width=300}
 ```{r}
-at_chroma <-
-  get_tidy_audio_analysis("5YCXiEpUqblYW5x9vWx8Qd") |>
-  select(segments) |>
-  unnest(segments) |>
-  select(start, duration, pitches) %>%
-  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) %>%
-  compmus_gather_chroma() 
-
-plot_at_chroma <-
-  ggplot(at_chroma,
-         aes(
-           x = start + duration / 2,
-           width = duration,
-           y = pitch_class,
-           fill = value
-         )
-  ) +
-  geom_tile() +
-  labs(x = "Chroma", y = NULL, fill = "Magnitude") +
-  theme_minimal() +
-  scale_fill_viridis_c() 
-
-at_timbre <-
-  get_tidy_audio_analysis("5YCXiEpUqblYW5x9vWx8Qd") |> # Change URI.
-  compmus_align(bars, segments) |>                     # Change `bars`
-  select(bars) |>                                      #   in all three
-  unnest(bars) |>                                      #   of these lines.
-  mutate(
-    pitches =
-      map(segments,
-          compmus_summarise, pitches,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
-      )
-  ) |>
-  mutate(
-    timbre =
-      map(segments,
-          compmus_summarise, timbre,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
-      )
-  ) |> compmus_gather_timbre()
-
-plot_at_timbre <-
-  ggplot(at_timbre,
-    aes(
-      x = start + duration / 2,
-      width = duration,
-      y = basis,
-      fill = value
-    )
-  ) +
-  geom_tile() +
-  labs(x = "Timbre", y = NULL, fill = "Magnitude") +
-  scale_fill_viridis_c() +                              
-  theme_classic()
+plot_at_chroma <- readRDS(file = "data/plot_at_chroma.RDS")
+plot_at_timbre <- readRDS(file = "data/plot_at_timbre.RDS")
 
 subplot(plot_at_chroma, plot_at_timbre) 
 ```
@@ -292,25 +78,7 @@ These plots show the chroma (left) and timbre (right) of the song 'Acid Tears' b
 
 ### Self-similarity matrices of Acid Tears - Culi. {data-commentary-width=300}
 ```{r}
-bzt <-
-  get_tidy_audio_analysis("5YCXiEpUqblYW5x9vWx8Qd") |>
-  compmus_align(bars, segments) |>
-  select(bars) |>
-  unnest(bars) |>
-  mutate(
-    pitches =
-      map(segments,
-        compmus_summarise, pitches,
-        method = "acentre", norm = "manhattan"
-      )
-  ) |>
-  mutate(
-    timbre =
-      map(segments,
-        compmus_summarise, timbre,
-        method = "mean"
-      )
-  )
+bzt <- readRDS(file = "data/bzt.RDS")
 
 bind_rows(
   bzt |> 
@@ -344,11 +112,7 @@ These are self-similarity matrices of chroma and timbre of Acid Tears by Culi..
 ### Visualisation of the Acousticness {data-commentary-width=300}
 
 ```{r}
-
-plot_acousticness <- ggplot(otra, aes(x=added_by.id, y=acousticness)) +
-  geom_boxplot() +
-  labs(x = '', y = "Acousticness", title = "Acousticness") +
-  theme_light()
+plot_acousticness <- readRDS(file = "data/plot_acousticness.RDS")
 
 ggplotly(plot_acousticness)
 
@@ -360,47 +124,7 @@ This plot is a boxplot about the acousticness of the songs added by Julia, Wille
 ### Visualisation of the Energy, Valence and Mode {data-commentary-width=300}
 
 ```{r}
-otra_evm <- otra %>%
-  mutate(
-    mode = ifelse(mode == 0, "Minor", "Major")
-  )
-
-plot_evm <- ggplot(otra_evm,
-    aes(
-      x = valence,
-      y = energy,
-      size = loudness,
-      colour = mode
-    )
-  ) +
-  geom_point() +              # Scatter plot.
-  geom_rug(linewidth = 0.1) + # Add 'fringes' to show data distribution.
-  facet_wrap(~ added_by.id) +    # Separate charts per playlist.
-  scale_x_continuous(         # Fine-tune the x axis.
-    limits = c(0, 1),
-    breaks = c(0, 0.50, 1),   # Use grid-lines for quadrants only.
-    minor_breaks = NULL       # Remove 'minor' grid-lines.
-  ) +
-  scale_y_continuous(         # Fine-tune the y axis in the same way.
-    limits = c(0, 1),
-    breaks = c(0, 0.50, 1),
-    minor_breaks = NULL
-  ) +
-  scale_colour_brewer(        # Use the Color Brewer to choose a palette.
-    type = "qual",            # Qualitative set.
-    palette = "Paired"        # Name of the palette is 'Paired'.
-  ) +
-  scale_size_continuous(      # Fine-tune the sizes of each point.
-    trans = "exp",            # Use an exp transformation to emphasise loud.
-    guide = "none"            # Remove the legend for size.
-  ) +
-  theme_light() +             # Use a simpler theme.
-  labs(                       # Make the titles nice.
-    x = "Valence",
-    y = "Energy",
-    colour = "Mode",
-    title = "Energy, Valence and Mode"
-  )
+plot_evm <- readRDS(file = "data/plot_evm.RDS")
 
 ggplotly(plot_evm)
 ```
@@ -410,54 +134,8 @@ This plot contains information about the energy, valence and mode of the songs a
 
 ### Chromagrams of two versions of Crazy Little Thing Called Love {data-commentary-width=300}
 ```{r, out.width="40%"}
-chroma <-
-  get_tidy_audio_analysis("5aYJ6gZyTFxZPAyTRRWKxP") |>
-  select(segments) |>
-  unnest(segments) |>
-  select(start, duration, pitches)
-
-chroma <- chroma %>%
-  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) %>%
-  compmus_gather_chroma() 
-  
-plot_chroma <-
-  ggplot(chroma,
-    aes(
-      x = start + duration / 2,
-      width = duration,
-      y = pitch_class,
-      fill = value
-    )
-  ) +
-  geom_tile() +
-  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
-  theme_minimal() +
-  scale_fill_viridis_c()
-
-chroma2 <-
-  get_tidy_audio_analysis("6xdLJrVj4vIXwhuG8TMopk") |>
-  select(segments) |>
-  unnest(segments) |>
-  select(start, duration, pitches)
-
-chroma2 <- chroma2 %>%
-  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) %>%
-  compmus_gather_chroma() 
-  
-plot_chroma2 <-
-  ggplot(chroma2,
-    aes(
-      x = start + duration / 2,
-      width = duration,
-      y = pitch_class,
-      fill = value
-    )
-  ) +
-  geom_tile() +
-  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
-  theme_minimal() +
-  scale_fill_viridis_c() + 
-  theme(legend.position = "none") 
+plot_chroma <- readRDS(file = "data/plot_chroma.RDS")
+plot_chroma2 <- readRDS(file = "data/plot_chroma2.RDS")
 
 subplot(plot_chroma, plot_chroma2, nrows = 2, margin = 0.04, heights = c(0.5, 0.5)) %>% layout(annotations = 
 list(list(x = 0.5,  y = 1.0,  
