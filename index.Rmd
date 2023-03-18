@@ -5,7 +5,9 @@ date: "2023-02-22"
 output: 
   flexdashboard::flex_dashboard:
     storyboard: true
-    theme: flatly 
+    theme:
+      base_font: 
+        google: Source Sans Pro
     
 ---
 
@@ -28,28 +30,34 @@ otra <- readRDS(file = "data/otra-data.RDS")
 knitr::opts_chunk$set(echo=FALSE)
 ```
 
-Introduction
+Introduction {data-icon="queue-music-rounded"}
 =========================================
 
-Column {data-width=800}
+Column {data-width=700}
 -------------------------------------
 
 ### .
 
 **The 'On the road (again)' corpus**
 
-For this computational musicological analysis I'm going to use a shared playlist between my sisters and I, called 'On the road (again)'. Down below you can see a picture of Julia, Willemijn and me (Roos). This playlist was used on vacation last year to combine our different tastes in music. Therefore the focus will be on the differences and similarities between the songs each of us put in the playlist. I think it will be interesting to analyze the different genres of the songs. Additionally, the energy the songs have is an interesting aspect to look more into. Because they are my sister, I already have some speculations about these differences. However, it still will be worth looking into. I expect the artists and release dates of the songs the be different. Also, the similarities between the songs will be interesting to discover. Since this playlist was made to listen to during car rides, I expect the songs to have somewhat of a similar sound. Furthermore, my sisters and I do influence each others music taste a little bit. I hope to discover more about who influences who and in what way exactly.
+For this computational musicological analysis I'm going to use a shared playlist between my sisters and I, called 'On the road (again)'. Down below you can see a picture of Julia, Willemijn and me (Roos). This playlist was used on vacation last year to combine our different tastes in music. Therefore the focus will be on the differences and similarities between the songs each of us put in the playlist. 
 
-Column {data-width=200}
------------------------------------------------------------------------
-### Julia
-![](Julia.jpeg){width=150} 
+**Expectations**
 
-### Willemijn
-![](Willemijn.png){width=150} 
+I think it will be interesting to analyze the different genres of the songs. Additionally, the energy the songs have is an interesting aspect to look more into. Because they are my sister, I already have some speculations about these differences. However, it still will be worth looking into. I expect the artists and release dates of the songs to be different. Also, the similarities between the songs will be interesting to discover. Since this playlist was made to listen to during car rides, I expect the songs to have somewhat of a similar sound. Furthermore, my sisters and I do influence each others music taste a little bit. I hope to discover more about who influences who and in what way exactly.
 
-### Roos
-![](Roos.jpeg){width=150}
+### .
+
+![](Julia.jpeg){width=50} 
+
+![](Willemijn.png){width=50} 
+
+![](Roos.jpeg){width=50}
+
+Column {data-width=300}
+-------------------------------------
+
+<iframe src="https://open.spotify.com/embed/playlist/6cZQQaJ0MsSHyUfGyuLgGK?utm_source=generator&theme=0" width="100%" height="100%" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
 # Visualisations {.storyboard}
 
