@@ -61,7 +61,15 @@ Column {data-width=300}
 
 # Visualisations {.storyboard}
 
-### Chordogram
+### Tempogram {data-commentary-width=300}
+```{r}
+tempogram <- readRDS(file = "data/tempogram.RDS")
+tempogram
+```
+***
+This is a Fourier-based tempogram of the song Viva La Vida by Coldplay.
+
+### Chordogram 
 ```{r}
 queen_plot <- readRDS(file = "data/queen_plot.RDS")
 phil_plot <- readRDS(file = "data/phil_plot.RDS")
