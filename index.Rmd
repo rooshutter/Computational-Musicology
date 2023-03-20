@@ -5,9 +5,11 @@ date: "2023-02-22"
 output: 
   flexdashboard::flex_dashboard:
     storyboard: true
-    theme:
+    theme: 
+      primary: "#118c7e"
       base_font: 
         google: Source Sans Pro
+      
     
 ---
 
@@ -30,7 +32,7 @@ otra <- readRDS(file = "data/otra-data.RDS")
 knitr::opts_chunk$set(echo=FALSE)
 ```
 
-Introduction {data-icon="queue-music-rounded"}
+Introduction {data-icon="music"}
 =========================================
 
 Column {data-width=700}
@@ -40,91 +42,36 @@ Column {data-width=700}
 
 **The 'On the road (again)' corpus**
 
-For this computational musicological analysis I'm going to use a shared playlist between my sisters and I, called 'On the road (again)'. Down below you can see a picture of Julia, Willemijn and me (Roos). This playlist was used on vacation last year to combine our different tastes in music. Therefore the focus will be on the differences and similarities between the songs each of us put in the playlist. 
+If you take car rides with your family often, you probably know the struggle: chosing music to listen to together. My siblings and I have had this struggle for multiple years, until we came across the option on Spotify to make shared playlists. Now, we make one everytime we go on vacation together, to avoid any conflicts. 
+
+For this computational musicological analysis I'm going to use one of the shared playlists. This playlist we used on vacation to Austria and it is called 'On the road (again)'. It contains different songs each of my sisters (Julia and Willemijn) and I (Roos). The focus for this portfolio will be on the differences and similarities between the songs each of us put in the playlist. 
 
 **Expectations**
 
-I think it will be interesting to analyze the different genres of the songs. Additionally, the energy the songs have is an interesting aspect to look more into. Because they are my sister, I already have some speculations about these differences. However, it still will be worth looking into. I expect the artists and release dates of the songs to be different. Also, the similarities between the songs will be interesting to discover. Since this playlist was made to listen to during car rides, I expect the songs to have somewhat of a similar sound. Furthermore, my sisters and I do influence each others music taste a little bit. I hope to discover more about who influences who and in what way exactly.
+Since they are my sisters, and I've known them all my life, I do have so speculations about the music tastes. However, I think it will still be worth looking into what these differences and similarities exactly are. 
 
-### .
-
-![](Julia.jpeg){width=50} 
-
-![](Willemijn.png){width=50} 
-
-![](Roos.jpeg){width=50}
+I think it will be interesting to analyze the different genres of the songs. Additionally, the energy the songs have is an interesting aspect to look more into. I expect the artists and release dates of the songs to be different. Also, the similarities between the songs will be interesting to discover. Since this playlist was made to listen to during car rides, I expect the songs to have somewhat of a similar sound. Furthermore, my sisters and I do influence each others music taste a little bit. I hope to discover more about who influences who and in what way exactly.
 
 Column {data-width=300}
 -------------------------------------
 
-<iframe src="https://open.spotify.com/embed/playlist/6cZQQaJ0MsSHyUfGyuLgGK?utm_source=generator&theme=0" width="100%" height="100%" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+<iframe src="https://open.spotify.com/embed/playlist/6cZQQaJ0MsSHyUfGyuLgGK?utm_source=generator" width="100%" height="100%" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
 # Visualisations {.storyboard}
 
 ### Tempogram {data-commentary-width=300}
 ```{r}
-tempogram <- readRDS(file = "data/tempogram.RDS")
-tempogram
+tempogram1 <- readRDS(file = "data/tempogram1.RDS")
+tempogram2 <- readRDS(file = "data/tempogram2.RDS")
+tempogram3 <- readRDS(file = "data/tempogram3.RDS")
+tempogram4 <- readRDS(file = "data/tempogram4.RDS")
+
+
+grid.arrange(tempogram1, tempogram2, tempogram3, tempogram4, ncol = 2)
 ```
 
 ***
-This is a Fourier-based tempogram of the song Viva La Vida by Coldplay.
-
-### Chordogram 
-```{r}
-queen_plot <- readRDS(file = "data/queen_plot.RDS")
-phil_plot <- readRDS(file = "data/phil_plot.RDS")
-
-grid.arrange(queen_plot, phil_plot, ncol = 1)
-
-```
-
-***
-These are chordograms of Good Old-Fashioned Lover Boy by Queen and Son of Man by Phil Collins
-
-
-### Chroma vs Timbre of Acid Tears - Culi. {data-commentary-width=300}
-```{r}
-plot_at_chroma <- readRDS(file = "data/plot_at_chroma.RDS")
-plot_at_timbre <- readRDS(file = "data/plot_at_timbre.RDS")
-
-subplot(plot_at_chroma, plot_at_timbre) 
-```
-*** 
-These plots show the chroma (left) and timbre (right) of the song 'Acid Tears' by 'Culi.'. It was added by me. The song is pretty consistent till about 2.45. This is shown well in the chromagram, at 165 the chroma changes. Before this point it was mostly C#, and after it is higher and switches between A#, G#, F# and F. This switch is also seen in the timbre, at the end the c02 is present.
-
-### Self-similarity matrices of Acid Tears - Culi. {data-commentary-width=300}
-```{r}
-bzt <- readRDS(file = "data/bzt.RDS")
-
-bind_rows(
-  bzt |> 
-    compmus_self_similarity(pitches, "aitchison") |> 
-    mutate(d = d / max(d), type = "Chroma"),
-  bzt |> 
-    compmus_self_similarity(timbre, "euclidean") |> 
-    mutate(d = d / max(d), type = "Timbre")
-) |>
-  mutate() |> 
-  ggplot(
-    aes(
-      x = xstart + xduration / 2,
-      width = xduration,
-      y = ystart + yduration / 2,
-      height = yduration,
-      fill = d
-    )
-  ) +
-  geom_tile() +
-  coord_fixed() +
-  facet_wrap(~type) +
-  scale_fill_viridis_c(option = "E", guide = "none") +
-  theme_classic() + 
-  labs(x = "", y = "", title="Self-similarity matrices")
-```
-
-***
-These are self-similarity matrices of chroma and timbre of Acid Tears by Culi.. 
+These are four Fourier-based tempograms. A tempogram shows the tempo of a music piece over time. Viva La Vida by Coldplay and Good Old-Fashioned Lover Boy by Queen is added by Julia, King of Everything by Dominic Fike is added by Willemijn and my future by Billie Eilish is added by me (Roos). You can see that the most left songs have a quite stable tempo, and the most right have a changing tempo.
 
 ### Visualisation of the Acousticness {data-commentary-width=300}
 
@@ -173,5 +120,60 @@ list(list(x = 0.5,  y = 1.0,
 
 --- 
 These are two chromagrams of the same song 'Crazy Little Thing Called Love', however one is sung by Maroon 5 and the other by Queen. The one from Maroon 5 is added by me and the one from Queen is added by Julia. In the beginning, the Maroon 5 one is a lot in pitch class A and Queen is a lot in D. However, around 50 there is a similar pattern in pitch class E for both songs.
+
+### Chroma vs Timbre of Acid Tears - Culi. {data-commentary-width=300}
+```{r}
+plot_at_chroma <- readRDS(file = "data/plot_at_chroma.RDS")
+plot_at_timbre <- readRDS(file = "data/plot_at_timbre.RDS")
+
+subplot(plot_at_chroma, plot_at_timbre) 
+```
+*** 
+These plots show the chroma (left) and timbre (right) of the song 'Acid Tears' by 'Culi.'. It was added by me. The song is pretty consistent till about 2.45. This is shown well in the chromagram, at 165 the chroma changes. Before this point it was mostly C#, and after it is higher and switches between A#, G#, F# and F. This switch is also seen in the timbre, at the end the c02 is present.
+
+### Self-similarity matrices of Acid Tears - Culi. {data-commentary-width=300}
+```{r}
+bzt <- readRDS(file = "data/bzt.RDS")
+
+bind_rows(
+  bzt |> 
+    compmus_self_similarity(pitches, "aitchison") |> 
+    mutate(d = d / max(d), type = "Chroma"),
+  bzt |> 
+    compmus_self_similarity(timbre, "euclidean") |> 
+    mutate(d = d / max(d), type = "Timbre")
+) |>
+  mutate() |> 
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  facet_wrap(~type) +
+  scale_fill_viridis_c(option = "E", guide = "none") +
+  theme_classic() + 
+  labs(x = "", y = "", title="Self-similarity matrices")
+```
+
+***
+These are self-similarity matrices of chroma and timbre of Acid Tears by Culi..
+
+### Chordogram 
+```{r}
+queen_plot <- readRDS(file = "data/queen_plot.RDS")
+phil_plot <- readRDS(file = "data/phil_plot.RDS")
+
+grid.arrange(queen_plot, phil_plot, ncol = 1)
+
+```
+
+***
+These are chordograms of Good Old-Fashioned Lover Boy by Queen and Son of Man by Phil Collins
 
 # Conclusion

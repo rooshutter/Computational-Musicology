@@ -1,4 +1,11 @@
 library(spotifyr)
+library(flexdashboard)
+library(readr)
+library(leaflet)
+library(DT)
+library(tidyverse)
+library(lubridate)
+library(plotly)
 
 Sys.setenv(SPOTIFY_CLIENT_ID = 'c6d2017616c34106a1b1c8407f7fbc6e')
 Sys.setenv(SPOTIFY_CLIENT_SECRET = '1bee2b2375da4f9a9332a114d31d0da7')
@@ -21,3 +28,4 @@ otra_r <- otra1 %>%
 otra <- rbind(head(otra_r, 52), otra_w, head(otra_j, 52))
 
 saveRDS(object = otra,file = "data/otra-data.RDS")
+
