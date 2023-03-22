@@ -6,7 +6,7 @@ output:
   flexdashboard::flex_dashboard:
     storyboard: true
     theme: 
-      primary: "#118c7e"
+      primary: "#3a5bb0"
       base_font: 
         google: Source Sans Pro
       
