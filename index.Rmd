@@ -169,11 +169,11 @@ These are self-similarity matrices of chroma and timbre of Acid Tears by Culi..
 queen_plot <- readRDS(file = "data/queen_plot.RDS")
 phil_plot <- readRDS(file = "data/phil_plot.RDS")
 
-grid.arrange(queen_plot, phil_plot, ncol = 1)
+subplot(queen_plot, phil_plot)
 
 ```
 
 ***
-These are chordograms of Good Old-Fashioned Lover Boy by Queen and Son of Man by Phil Collins
+These are chordograms of Good Old-Fashioned Lover Boy by Queen (left) and Son of Man by Phil Collins (right)
 
 # Conclusion
