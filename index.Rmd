@@ -71,7 +71,7 @@ grid.arrange(tempogram1, tempogram2, tempogram3, tempogram4, ncol = 2)
 ```
 
 ***
-These are four Fourier-based tempograms. A tempogram shows the tempo of a music piece over time. Viva La Vida by Coldplay and Good Old-Fashioned Lover Boy by Queen is added by Julia, King of Everything by Dominic Fike is added by Willemijn and my future by Billie Eilish is added by me (Roos). You can see that the most left songs have a quite stable tempo, and the most right have a changing tempo.
+These are four Fourier-based tempograms. A tempogram shows the tempo of a music piece over time. Viva La Vida by Coldplay and Good Old-Fashioned Lover Boy by Queen is added by Julia, King of Everything by Dominic Fike is added by Willemijn and my future by Billie Eilish is added by me (Roos). 
 
 ### Visualisation of the Acousticness {data-commentary-width=300}
 
