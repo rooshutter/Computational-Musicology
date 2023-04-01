@@ -14,6 +14,8 @@ output:
     
 ---
 
+
+
 ```{r setup, include=FALSE}
 library(flexdashboard)
 library(readr)
@@ -27,13 +29,16 @@ library(Cairo)
 library(compmus)
 library(grid)
 library(gridExtra)
+library(ggdendro)
+library(heatmaply)
+library(tidymodels)
 
 otra <- readRDS(file = "data/otra-data.RDS")
 
 knitr::opts_chunk$set(echo=FALSE)
 ```
 
-Introduction {data-icon="music"}
+Introduction
 =========================================
 
 Row
@@ -44,7 +49,7 @@ Row
 **The 'On the road (again)' corpus**  
 If you take car rides with your family often, you probably know the struggle: chosing music to listen to together. My siblings and I have had this struggle for multiple years, until we came across the option on Spotify to make shared playlists. Now, we make one everytime we go on vacation together, to avoid any conflicts. 
 
-For this computational musicological analysis I'm going to use one of the shared playlists. This playlist we used on vacation to Austria and it is called 'On the road (again)'. It contains different songs each of my sisters (Julia and Willemijn) and I (Roos). The focus for this portfolio will be on the differences and similarities between the songs each of us put in the playlist. 
+For this computational musicological analysis I'm going to use one of the shared playlists. This playlist we used on vacation to Austria and it is called 'On the road (again)'. It contains different songs each of my sisters (Julia and Willemijn) and I (Roos). The focus for this portfolio will be on the differences and similarities between the songs each of us put in the playlist. I will also analyse songs that stand out. 
 
 **Expectations**  
 Since they are my sisters, and I've known them all my life, I do have so speculations about the music tastes. However, I think it will still be worth looking into what these differences and similarities exactly are. 
@@ -89,7 +94,7 @@ gauge(341, min = 0, max = 609, gaugeSectors(
 ```{r}
 plot_acousticness <- readRDS(file = "data/plot_acousticness.RDS")
 
-ggplotly(plot_acousticness)
+ggplotly(plot_acousticness, tooltip = "text")
 
 ```
 
@@ -105,7 +110,7 @@ You can clearly see that I have songs which are the most acoustic. It's interest
 ```{r}
 plot_evm <- readRDS(file = "data/plot_evm.RDS")
 
-ggplotly(plot_evm)
+ggplotly(plot_evm, tooltip = "text")
 ```
 
 ***
@@ -115,9 +120,17 @@ This plot contains information about the energy, valence and mode of the songs a
 **Explanation**  
 I think it's interesting that the energy of most songs are high. However you can see that Willemijn has the most songs with high energy, which I expected. Another interesting point is that Julia and Willemijn have similarities between energy, valence and mode, their plot looks kind of the same. However mine (Roos) looks very different, my songs are more spread out and have less energy. 
 
-### Same songs
+### Populatiry {data-commentary-width=400}
 
+```{r}
+pop <- readRDS(file = "data/pop.RDS")
 
+ggplotly(pop, tooltip = "text")
+```
+***
+**Terminology**  
+
+**Explanation**  
 
 ### Chromagrams of two versions of Crazy Little Thing Called Love {data-commentary-width=400}
 ```{r, out.width="40%"}
@@ -141,7 +154,7 @@ list(list(x = 0.5,  y = 1.0,
 
 ```
 
---- 
+***
 **Terminology**  
 These are two chromagrams of the same song 'Crazy Little Thing Called Love', however one is sung by Maroon 5 and the other by Queen. Chromagrams are representations of the pitch content during a song.
 
@@ -220,5 +233,17 @@ grid.arrange(tempogram1, tempogram2, tempogram3, tempogram4, ncol = 2)
 
 ***
 These are four Fourier-based tempograms. A tempogram shows the tempo of a music piece over time. Viva La Vida by Coldplay and Good Old-Fashioned Lover Boy by Queen is added by Julia, King of Everything by Dominic Fike is added by Willemijn and my future by Billie Eilish is added by me (Roos). 
+
+### Clustering {data-commentary-width=400}
+```{r}
+#clustering <- readRDS(file = "data/clustering.RDS")
+
+```
+
+***
+**Terminology**  
+
+**Explanation**  
+kljfklsdjf
 
 # Conclusion

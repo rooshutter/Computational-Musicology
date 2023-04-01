@@ -12,6 +12,20 @@ library(ggdendro)
 library(heatmaply)
 library(tidymodels)
 
+otra_j <- otra %>%
+  filter(added_by.id == '1153531084') %>%
+  mutate(added_by.id = "Julia")
+
+otra_w <- otra %>%
+  filter(added_by.id == '1168120441') %>%
+  mutate(added_by.id = "Willemijn")
+
+otra_r <- otra %>%
+  filter(added_by.id == 'roos.hutter') %>%
+  mutate(added_by.id = "Roos")
+
+otra2 <- rbind(head(otra_r, 10), head(otra_w, 10), head(otra_j, 10))
+
 get_conf_mat <- function(fit) {
   outcome <- .get_tune_outcome_names(fit)
   fit |> 
@@ -28,28 +42,7 @@ get_pr <- function(fit) {
     select(class = Prediction, precision, recall)
 }  
 
-halloween <-
-  get_playlist_audio_features("bnfcollection", "1vsoLSK3ArkpaIHmUaF02C") |>
-  add_audio_analysis() |>
-  mutate(
-    segments = map2(segments, key, compmus_c_transpose),
-    pitches =
-      map(segments,
-          compmus_summarise, pitches,
-          method = "mean", norm = "manhattan"
-      ),
-    timbre =
-      map(
-        segments,
-        compmus_summarise, timbre,
-        method = "mean"
-      )
-  ) |>
-  mutate(pitches = map(pitches, compmus_normalise, "clr")) |>
-  mutate_at(vars(pitches, timbre), map, bind_rows) |>
-  unnest(cols = c(pitches, timbre))
-
-halloween_juice <-
+indie_juice <-
   recipe(
     track.name ~
       danceability +
@@ -60,75 +53,51 @@ halloween_juice <-
       instrumentalness +
       liveness +
       valence +
-      tempo +
-      duration +
-      C + `C#|Db` + D + `D#|Eb` +
-      E + `F` + `F#|Gb` + G +
-      `G#|Ab` + A + `A#|Bb` + B +
-      c01 + c02 + c03 + c04 + c05 + c06 +
-      c07 + c08 + c09 + c10 + c11 + c12,
-    data = halloween
+      tempo,
+    data = otra2
   ) |>
   step_center(all_predictors()) |>
   step_scale(all_predictors()) |> 
   # step_range(all_predictors()) |> 
-  prep(halloween |> mutate(track.name = str_trunc(track.name, 20))) |>
+  prep(otra2 |> mutate(track.name = str_trunc(track.name, 15))) |>
   juice() |>
   column_to_rownames("track.name")
 
-otra_c <-
-  otra |>
-  add_audio_analysis() |>
-  mutate(
-    segments = map2(segments, key, compmus_c_transpose),
-    pitches =
-      map(segments,
-          compmus_summarise, pitches,
-          method = "mean", norm = "manhattan"
-      ),
-    timbre =
-      map(
-        segments,
-        compmus_summarise, timbre,
-        method = "mean"
-      )
-  ) |>
-  mutate(pitches = map(pitches, compmus_normalise, "clr")) |>
-  mutate_at(vars(pitches, timbre), map, bind_rows) |>
-  unnest(cols = c(pitches, timbre))
+indie_dist <- dist(indie_juice, method = "euclidean")
 
-juice_otra <-
-  recipe(
-    track.name ~
-      danceability +
-      energy +
-      loudness +
-      speechiness +
-      acousticness +
-      instrumentalness +
-      liveness +
-      valence +
-      tempo +
-      duration +
-      C + 'C#|Db' + D + 'D#|Eb' +
-      E + 'F' + 'F#|Gb' + G +
-      'G#|Ab' + A + 'A#|Bb' + B +
-      c01 + c02 + c03 + c04 + c05 + c06 +
-      c07 + c08 + c09 + c10 + c11 + c12,
-    data = otra_c
-  ) |>
-  step_center(all_predictors()) |>
-  step_scale(all_predictors()) |> 
-  # step_range(all_predictors()) |> 
-  prep(otra_c |> mutate(track.name = str_trunc(track.name, 20))) |>
-  juice() |>
-  column_to_rownames("track.name")
+data_for_indie_clustering <- indie_dist |> 
+  hclust(method = "average") |> # average for a balanced tree!
+  dendro_data() 
 
-dist <- dist(juice_otra, method = "euclidean")
+playlist_data_for_join <- otra2 %>%
+  select(track.name, added_by.id) %>%
+  mutate(label = str_trunc(track.name, 15))
 
-clustering <- dist |> 
-  hclust(method = "single") |> # Try single, average, and complete.
-  dendro_data() |>
-  ggdendrogram()
+data_for_indie_clustering$labels <- data_for_indie_clustering$labels %>%
+  left_join(playlist_data_for_join)
+
+# Add factor so can use colouring! 
+data_for_indie_clustering$labels$label <- factor(data_for_indie_clustering$labels$label)
+
+clustering <- data_for_indie_clustering |>
+  ggdendrogram() +
+  geom_text(data = label(data_for_indie_clustering), aes(x, y, 
+                                                         label=label, 
+                                                         hjust=0, 
+                                                         colour=added_by.id), size=3) +
+  coord_flip() + 
+  scale_y_reverse(expand=c(0.2, 0)) +
+  theme(axis.line.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.title.y=element_blank(),
+        panel.background=element_rect(fill="white"),
+        panel.grid=element_blank()) +
+  labs(title = "Added by Clustering") +
+  guides(
+    colour = guide_legend(
+      title = "Added by"
+    )
+  )
 
 saveRDS(object = clustering, file = "data/clustering.RDS")
