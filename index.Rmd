@@ -54,9 +54,9 @@ I think it will be interesting to analyze the different genres of the songs. Add
 
 Column {data-width=300}
 -------------------------------------
-
-<iframe src="https://open.spotify.com/embed/playlist/6cZQQaJ0MsSHyUfGyuLgGK?utm_source=generator" width="99%" height="99%" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
-
+```{r}
+#<iframe src="https://open.spotify.com/embed/playlist/6cZQQaJ0MsSHyUfGyuLgGK?utm_source=generator" width="99%" height="99%" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+```
 # Visualisations {.storyboard}
 
 ### Visualisation of the Acousticness {data-commentary-width=400}
@@ -69,7 +69,13 @@ ggplotly(plot_acousticness)
 ```
 
 ***
-This plot is a boxplot about the acousticness of the songs added by Julia, Willemijn and Roos. You can clearly see that I have songs which are the most acoustic. It's interesting to see that Julia and Willemijn have similar acousticness.
+**Explanation**
+
+This plot is a box plot about the acousticness of the songs added by Julia, Willemijn and Roos. Acousticness is a Spotify feature that ranges from 0.0 to 1.0. 1.0 represents high confidence that the track is acoustic.
+
+**Comparison**
+
+You can clearly see that I have songs which are the most acoustic. It's interesting to see that Julia and Willemijn have similar acousticness.
 
 ### Visualisation of the Energy, Valence and Mode {data-commentary-width=400}
 
@@ -80,7 +86,13 @@ ggplotly(plot_evm)
 ```
 
 ***
-This plot contains information about the energy, valence and mode of the songs added by Julia, Willemijn and Roos. I think it's interesting that the energy of most songs are high. However you can see that Willemijn has the most songs with high energy, which I expected. Another interesting point is that Julia and Willemijn have similarities between energy, valence and mode, their plot looks kind of the same. However mine (Roos) looks very different, my songs are more spread out and have less energy. 
+**Explanation**
+
+This plot contains information about the energy, valence and mode of the songs added by Julia, Willemijn and Roos. Energy, valence and mode are all features from Spotify. Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy. Valence is a measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive, while tracks with low valence sound more negative. Mode indicates the modality (major or minor) of a track. Major is represented by 1 and minor is 0.
+
+**Comparisons**
+
+I think it's interesting that the energy of most songs are high. However you can see that Willemijn has the most songs with high energy, which I expected. Another interesting point is that Julia and Willemijn have similarities between energy, valence and mode, their plot looks kind of the same. However mine (Roos) looks very different, my songs are more spread out and have less energy. 
 
 ### Chromagrams of two versions of Crazy Little Thing Called Love {data-commentary-width=400}
 ```{r, out.width="40%"}
