@@ -5,10 +5,17 @@ otra_evm <- otra %>%
 
 plot_evm <- ggplot(otra_evm,
                    aes(
-                     x = valence,
+                     x = danceability,
                      y = energy,
                      size = loudness,
-                     colour = mode
+                     colour = mode,
+                     text = paste("Track: ", track.name, "<br>",
+                                  "Artist: ", track.artists, "<br>",
+                                  "Danceability: ", danceability, "<br>",
+                                  "Energy: ", energy, "<br>",
+                                  "Loudness: ", loudness, "<br>",
+                                  "Mode: ", mode, "<br>"
+                     )
                    )
 ) +
   geom_point() +              # Scatter plot.
@@ -34,10 +41,10 @@ plot_evm <- ggplot(otra_evm,
   ) +
   theme_light() +             # Use a simpler theme.
   labs(                       # Make the titles nice.
-    x = "Valence",
+    x = "Danceability",
     y = "Energy",
     colour = "Mode",
-    title = "Energy, Valence and Mode"
+    title = "Energy, Danceability, Loudness and Mode"
   )
 
 saveRDS(object = plot_evm, file = "data/plot_evm.RDS")

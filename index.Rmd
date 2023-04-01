@@ -4,6 +4,7 @@ author: "Roos Hutter"
 date: "2023-02-22"
 output: 
   flexdashboard::flex_dashboard:
+    orientation: rows
     storyboard: true
     theme: 
       primary: "#304878"
@@ -35,28 +36,52 @@ knitr::opts_chunk$set(echo=FALSE)
 Introduction {data-icon="music"}
 =========================================
 
-Column {data-width=700}
--------------------------------------
+Row
+-----------------------------------------------------------------------
 
-### .
+### About the corpus and the analysis {data-width=700}
 
-**The 'On the road (again)' corpus**
-
+**The 'On the road (again)' corpus**  
 If you take car rides with your family often, you probably know the struggle: chosing music to listen to together. My siblings and I have had this struggle for multiple years, until we came across the option on Spotify to make shared playlists. Now, we make one everytime we go on vacation together, to avoid any conflicts. 
 
 For this computational musicological analysis I'm going to use one of the shared playlists. This playlist we used on vacation to Austria and it is called 'On the road (again)'. It contains different songs each of my sisters (Julia and Willemijn) and I (Roos). The focus for this portfolio will be on the differences and similarities between the songs each of us put in the playlist. 
 
-**Expectations**
-
+**Expectations**  
 Since they are my sisters, and I've known them all my life, I do have so speculations about the music tastes. However, I think it will still be worth looking into what these differences and similarities exactly are. 
 
 I think it will be interesting to analyze the different genres of the songs. Additionally, the energy the songs have is an interesting aspect to look more into. I expect the artists and release dates of the songs to be different. Also, the similarities between the songs will be interesting to discover. Since this playlist was made to listen to during car rides, I expect the songs to have somewhat of a similar sound. Furthermore, my sisters and I do influence each others music taste a little bit. I hope to discover more about who influences who and in what way exactly.
 
-Column {data-width=300}
--------------------------------------
+
+### On the road (again) {data-width=300}
 ```{r}
 #<iframe src="https://open.spotify.com/embed/playlist/6cZQQaJ0MsSHyUfGyuLgGK?utm_source=generator" width="99%" height="99%" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 ```
+
+Row
+-----------------------------------------------------------------------
+
+### Amount of songs of Julia
+```{r}
+
+gauge(216, min = 0, max = 609, gaugeSectors(
+  success = c(80, 609), warning = c(40, 79), danger = c(0, 39)
+))
+
+```
+### Amount of songs of Willemijn
+```{r}
+gauge(52, min = 0, max = 609, gaugeSectors(
+  success = c(80, 609), warning = c(40, 79), danger = c(0, 39)
+))
+```
+
+### Amount of songs of Roos
+```{r}
+gauge(341, min = 0, max = 609, gaugeSectors(
+  success = c(80, 609), warning = c(40, 79), danger = c(0, 39)
+))
+```
+
 # Visualisations {.storyboard}
 
 ### Visualisation of the Acousticness {data-commentary-width=400}
@@ -69,15 +94,13 @@ ggplotly(plot_acousticness)
 ```
 
 ***
-**Explanation**
-
+**Terminology**  
 This plot is a box plot about the acousticness of the songs added by Julia, Willemijn and Roos. Acousticness is a Spotify feature that ranges from 0.0 to 1.0. 1.0 represents high confidence that the track is acoustic.
 
-**Comparison**
-
+**Explanation**  
 You can clearly see that I have songs which are the most acoustic. It's interesting to see that Julia and Willemijn have similar acousticness.
 
-### Visualisation of the Energy, Valence and Mode {data-commentary-width=400}
+### Visualisation of the Energy, Danceability and Mode {data-commentary-width=400}
 
 ```{r}
 plot_evm <- readRDS(file = "data/plot_evm.RDS")
@@ -86,13 +109,15 @@ ggplotly(plot_evm)
 ```
 
 ***
-**Explanation**
-
+**Terminology**  
 This plot contains information about the energy, valence and mode of the songs added by Julia, Willemijn and Roos. Energy, valence and mode are all features from Spotify. Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy. Valence is a measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive, while tracks with low valence sound more negative. Mode indicates the modality (major or minor) of a track. Major is represented by 1 and minor is 0.
 
-**Comparisons**
-
+**Explanation**  
 I think it's interesting that the energy of most songs are high. However you can see that Willemijn has the most songs with high energy, which I expected. Another interesting point is that Julia and Willemijn have similarities between energy, valence and mode, their plot looks kind of the same. However mine (Roos) looks very different, my songs are more spread out and have less energy. 
+
+### Same songs
+
+
 
 ### Chromagrams of two versions of Crazy Little Thing Called Love {data-commentary-width=400}
 ```{r, out.width="40%"}
@@ -117,7 +142,11 @@ list(list(x = 0.5,  y = 1.0,
 ```
 
 --- 
-These are two chromagrams of the same song 'Crazy Little Thing Called Love', however one is sung by Maroon 5 and the other by Queen. The one from Maroon 5 is added by me and the one from Queen is added by Julia. In the beginning, the Maroon 5 one is a lot in pitch class A and Queen is a lot in D. However, around 50 there is a similar pattern in pitch class E for both songs.
+**Terminology**  
+These are two chromagrams of the same song 'Crazy Little Thing Called Love', however one is sung by Maroon 5 and the other by Queen. Chromagrams are representations of the pitch content during a song.
+
+**Explanation**  
+The one from Maroon 5 is added by me and the one from Queen is added by Julia. In the beginning, the Maroon 5 one is a lot in pitch class A and Queen is a lot in D. However, around 50 there is a similar pattern in pitch class E for both songs.
 
 ### Chroma vs Timbre of Acid Tears - Culi. {data-commentary-width=400}
 ```{r}
@@ -127,7 +156,11 @@ plot_at_timbre <- readRDS(file = "data/plot_at_timbre.RDS")
 subplot(plot_at_chroma, plot_at_timbre) 
 ```
 *** 
-These plots show the chroma (left) and timbre (right) of the song 'Acid Tears' by 'Culi.'. It was added by me. The song is pretty consistent till about 2.45. This is shown well in the chromagram, at 165 the chroma changes. Before this point it was mostly C#, and after it is higher and switches between A#, G#, F# and F. This switch is also seen in the timbre, at the end the c02 is present.
+**Terminology**  
+These plots show the chroma (left) and timbre (right) of the song 'Acid Tears' by 'Culi.'.
+
+**Explanation**  
+It was added by me. The song is pretty consistent till about 2.45. This is shown well in the chromagram, at 165 the chroma changes. Before this point it was mostly C#, and after it is higher and switches between A#, G#, F# and F. This switch is also seen in the timbre, at the end the c02 is present.
 
 ### Self-similarity matrices of Acid Tears - Culi. {data-commentary-width=400}
 ```{r}
