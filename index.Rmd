@@ -1,7 +1,7 @@
 ---
 title: "On the road (again)"
 author: "Roos Hutter"
-date: "2023-02-22"
+date: "2023"
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
@@ -62,14 +62,14 @@ Another song that stands out is *Crazy Little Thing Called Love* by Queen and it
 
 
 ### On the road (again) {data-width=300}
-```{r}
-#<iframe src="https://open.spotify.com/embed/playlist/6cZQQaJ0MsSHyUfGyuLgGK?utm_source=generator" width="99%" height="99%" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
-```
+
+<iframe src="https://open.spotify.com/embed/playlist/6cZQQaJ0MsSHyUfGyuLgGK?utm_source=generator" width="99%" height="99%" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+
 
 Row
 -----------------------------------------------------------------------
 
-### Amount of songs of Julia
+### Amount of songs added by Julia
 ```{r}
 
 gauge(216, min = 0, max = 609, gaugeSectors(
@@ -77,14 +77,14 @@ gauge(216, min = 0, max = 609, gaugeSectors(
 ))
 
 ```
-### Amount of songs of Willemijn
+### Amount of songs added by Willemijn
 ```{r}
 gauge(52, min = 0, max = 609, gaugeSectors(
   success = c(80, 609), warning = c(40, 79), danger = c(0, 39)
 ))
 ```
 
-### Amount of songs of Roos
+### Amount of songs added by Roos
 ```{r}
 gauge(341, min = 0, max = 609, gaugeSectors(
   success = c(80, 609), warning = c(40, 79), danger = c(0, 39)
@@ -110,7 +110,7 @@ This plot is a representation of the valence, acousticness, loudness and energy 
 One thing that stands out for each person is the resemblance between loudness and acousticness. The loudest songs, are almost all not acoustic at all. Evidently, this makes sense. Acoustic songs are made by using only natural sound and no electronics, which makes the sound softer. Another resemblance that is noticeable, is between energy and acousticness. The lower the energy, the higher the acousticness. This is the case because there is a connection between loudness and energy as well. We all have the most songs in the lower right square, which is low acousticness and high valence. Those songs are also with high loudness. I think this makes sense since we listen to the songs in the car on vacation and we mainly want to listen to happy, upbeat songs. 
 
 **Differences**  
-A difference that really jumps out for me is in the songs that I added. There are a lot of songs in the top left square, which have high acousticness, low energy, low loudness and low valence. I think these songs are those that originated out of my own music taste. Naturally, the song with the lowest valence *Lo Vas A Olvidar* by Billie Eilish and ROSALÍA is one of mine. A song that really stands out is *Me & Mr Jones* by Amy Winehouse added by Julia. It had very high loudness for the amount of acousticness it has.
+A difference that really jumps out for me is in the songs that I added. There are a lot of songs in the top left square, which have high acousticness, low energy, low loudness and low valence. I think these songs are those that originated out of my own music taste. Naturally, the song with the lowest valence *Lo Vas A Olvidar* by Billie Eilish and ROSALÍA is one of mine. Julia has proportional the most high valence songs. A song that really stands out is *Me & Mr Jones* by Amy Winehouse added by Julia. It had very high loudness for the amount of acousticness it has. 
 
 ### We all added many danceable, energetic and loud songs {data-commentary-width=400}
 
@@ -145,7 +145,7 @@ This plot contains information about the danceability, popularity, instrumentaln
 Popular songs are popular for a reason: a lot of people listen to them. So no surprise that my sisters and I did and do as well and added them to the *On the road (again)* playlist. Worth mentioning is that the popularity feature measure how popular a song is today, and not how popular it was when it came out. You can see that most songs added by us are in the upper part of the plot, so they have high popularity. I expected there to be popular song in playlist, which is the case. However, a lot of songs are lower in popularity than I expected. Perhaps, that's the case because they are nostalgic songs and therefore older songs who are not considered popular nowadays. Interestingly, there are quite a lot of songs with zero or almost zero popularity. *September* by Earth, Wind & Fire added by me, has a popularity of 0, which is quite surprising. For all of us, songs with high instrumentalness are pretty much everywhere in the plot and we all added around the same amount of them. I cannot notice a link between energy and the other features.
 
 **Differences**  
-To my surprise, I added the most songs with low popularity, but also the song with the highest popularity, namely *Starboy* by The Weeknd and Daft Punk. Julia and Willemijn both added *Cajun Moon* by J.J. Cale, but both from a different album. A very strange outcome is that the one added by Julia has a popularity of 58 and by Willemijn has 12, which is considerably lower. I think this is the case because Julia added one from the album *Okie*, which is released in 1974 and Willemijn from *Collected*, which is released in 2013. Therefore, Julia's song is the original released song.
+To my surprise, I added the most songs with low popularity, but also the song with the highest popularity, namely *Starboy* by The Weeknd and Daft Punk. Julia and Willemijn both added *Cajun Moon* by J.J. Cale, but both from a different album. A very strange outcome is that the one added by Julia has a popularity of 58 and by Willemijn has 12, which is considerably lower. I think this is the case because Julia added one from the album *Okie*, which is released in 1974 and Willemijn from *Collected*, which is released in 2013. Therefore, Julia's song is the original released song. If you look closely, you can see that Willemijn has proportional the most songs with high energy.
 
 
 ### Chromagrams of two versions of Crazy Little Thing Called Love {data-commentary-width=400}
@@ -171,11 +171,9 @@ list(list(x = 0.5,  y = 1.0,
 ```
 
 ***
-```{r}
-#<iframe src="https://open.spotify.com/embed/track/6xdLJrVj4vIXwhuG8TMopk?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+<iframe src="https://open.spotify.com/embed/track/6xdLJrVj4vIXwhuG8TMopk?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
-#<iframe src="https://open.spotify.com/embed/track/5aYJ6gZyTFxZPAyTRRWKxP?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
-```
+<iframe src="https://open.spotify.com/embed/track/5aYJ6gZyTFxZPAyTRRWKxP?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
 **Terminology**  
 These are two chromagrams of the same song 'Crazy Little Thing Called Love', however one is the original by Queen and the other is a cover sung by Maroon 5. These songs is chosen, because they are the only origin and cover in the playlist. Queen and Maroon 5 are one of the nostalgic artists, that is probably the reason they were added to the playlist. I know that Julia was a really big fan of Maroon 5 and that she influenced us to listen to them too. Chromagrams are representations of the pitch content during a song. The lighter the blue, the higher the magnitude of that pitch.
@@ -261,11 +259,11 @@ grid.arrange(el_plot, ptb_plot)
 ```
 
 ***
-```{r}
-#<iframe src="https://open.spotify.com/embed/track/00hzFg3J78uIchXYUJVa5U?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
-#<iframe src="https://open.spotify.com/embed/track/4KktZd9BGHZjW3sK03O4zo?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
-```
+<iframe src="https://open.spotify.com/embed/track/00hzFg3J78uIchXYUJVa5U?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+
+<iframe src="https://open.spotify.com/embed/track/4KktZd9BGHZjW3sK03O4zo?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+
 
 **Terminology**  
 These are self-similarity matrices of chroma and timbre of *Enough Love* by Duffy added by me and *Push The Button* by Sugababes added by Julia. Self-similarity matrices are visual representations of the similarity between different segments of an audio signal. Chroma is about the pitch class and timbre distinguishes different types of musical instruments, voices, or sound sources. Dark diagonal lines mean repetitions in the song, a light bar means that something unusual happens and checkerboard blocks are similar structure throughout the song. These songs are chosen because *Enough Love* has the lowest danceability and *Push The Button* the highest in the playlist and I thought it is interesting to analyze these songs a bit more. Duffy and Sugababes are one of the nostalgic artists. Duffy was one of the artists that our parents would play in the car. 
@@ -280,7 +278,7 @@ The self-similarity matrix of the chroma looks like a complete checkerboard bloc
 Both songs sound very different, therefore the self-similarity matrices look nothing alike too. *Enough Love* consists of different parts, while *Push The Button* is mostly consistent.
 
 
-### Chordogram {data-commentary-width=400}
+### *Cajun Moon* and *Call me The Breeze* by J.J. Cale have similar chords {data-commentary-width=400}
 ```{r}
 queen_plot <- readRDS(file = "data/queen_plot.RDS")
 phil_plot <- readRDS(file = "data/phil_plot.RDS")
@@ -290,19 +288,24 @@ grid.arrange(queen_plot, phil_plot, ncol=2)
 ```
 
 ***
-```{r}
-#<iframe src="https://open.spotify.com/embed/track/5AQpbyFoQmkOVwmlhKN4ii?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
-#<iframe src="https://open.spotify.com/embed/track/43niiTshfUdTN32wHykv7h?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+<iframe src="https://open.spotify.com/embed/track/5AQpbyFoQmkOVwmlhKN4ii?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
-```
+<iframe src="https://open.spotify.com/embed/track/43niiTshfUdTN32wHykv7h?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+
+
 **Terminology**  
 These are chordograms of *Cajun Moon* by J.J. Cale and *Call me The Breeze* by J.J. Cale. A chordogram is a visual representation of the chord content during a song. The darker the blue, the higher the magnitude of that chord. Both songs were added twice by Julia and Willemijn, but from a different album. This is the reason for more inspection of the songs. J.J. Cale is one of the nostalgic artists, our dad would listen to him a lot. That's why Julia and Willemijn added both songs to the playlist.
 
 **Similarities**  
 Since these songs are from the same artist, the chords used are also similar. J.J. Cale used Eb and Ab in both songs. In *Call Me The Breeze*, chord Gb is also used. Both songs have consistent use of the same chords.
 
-### Tempogram {data-commentary-width=400}
+
+
+
+
+
+### *What Makes You Beautiful* and *Stutter* have similar tempo but *Still Counting* not at all {data-commentary-width=400}
 ```{r}
 tempogram1 <- readRDS(file = "data/tempogram1.RDS")
 tempogram2 <- readRDS(file = "data/tempogram2.RDS")
@@ -313,13 +316,12 @@ grid.arrange(tempogram1, tempogram2, tempogram3, ncol = 2)
 ```
 
 ***
-```{r}
-#<iframe src="https://open.spotify.com/embed/track/4cluDES4hQEUhmXj6TXkSo?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+<iframe src="https://open.spotify.com/embed/track/4cluDES4hQEUhmXj6TXkSo?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
-#<iframe src="https://open.spotify.com/embed/track/2Dpe2dH0Dvj2iVnDQvMv1E?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+<iframe src="https://open.spotify.com/embed/track/2Dpe2dH0Dvj2iVnDQvMv1E?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
-#<iframe src="https://open.spotify.com/embed/track/1znGxpojJSjxZZEWA5zWva?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
-```
+<iframe src="https://open.spotify.com/embed/track/1znGxpojJSjxZZEWA5zWva?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+
 
 **Terminology**  
 These are three Fourier-based tempograms. A tempogram shows the tempo of a music piece over time. However, tempo is hard feature to analyze, since the tempograms often do not line up with the songs. *What Makes You Beautiful* by One Direction is added by Julia, *Still Counting* is added by Willemijn and *Stutter* by Maroon 5 is added by me. These songs were chosen because they all have high loudness and.  
@@ -328,7 +330,7 @@ These are three Fourier-based tempograms. A tempogram shows the tempo of a music
 *What Makes You Beautiful* and *Stutter* have clear lines throughout the whole song, but *Still Counting* does not. The first two have consistent tempo during the whole song and have very clear drum and rhythm. I would even argue that they have very similar tempo. However the tempogram of *Still Counting* looks a lot messier. At around 50 seconds, the song going over to a instrumental guitar part, which is noticeable in the tempogram. One Direction and Maroon 5 are artists that are nostalgic to all of us. Volbeat however, is a clear example of one of Willemijn's rock songs.
 
 
-### Clustering {data-commentary-width=400}
+### Barely any resemblance between clustered songs {data-commentary-width=400}
 ```{r}
 clustering <- readRDS(file = "data/clustering.RDS")
 clustering
@@ -336,9 +338,28 @@ clustering
 
 ***
 **Terminology**  
+This plot is a dendrogram, a tree-like diagram that is used to represent the hierarchical clustering of songs in the playlist. The type of linkage that is used is average. Because the *On the road (again)* playlist consists of too many songs for clustering, only 10 songs are used from each person. 
+
+**Explanation**   
+The first thing that stands out, is that the songs are not clustered by who they are added. Another interesting aspect is that *Cajun Moon* by J.J. Cole is in its own cluster. If I really search for resemblance in the songs in the same cluster I can find some, but overall the clusters are pretty random. Songs from the same artist are not even in the same cluster, for example *Mercy* and *Stepping Stone* by Duffy are not even close. 
+
+### Predicted most songs are added by Julia {data-commentary-width=400}
+```{r}
+map <- readRDS(file = "data/map.RDS")
+map
+```
+
+***
+**Terminology**  
+This matrix shows the results of an algorithm for classification, called k-nearest neighbour. It shows how well the classification was done. The numbers show how often each person was predicted to have added a song, and its true person that added the song. 10 songs are being classified per person.
 
 **Explanation**  
-
+As shown in the matrix, 6 out of the 10 songs added by Julia are predicted to be added by her as well. The algorithm predicted that 8 more songs were added by Julia, but this was not the case. This could be the case because Julia added most nostalgic songs, and if we did too, the algorithm thought they were added by Julia. Half of the songs that are mine were predicted to be added by me. Only 2 songs that were added by Willemijn were predicted to be added by her. Her songs are pretty hard to predict. I think because she has some random songs that do not really line up with her music taste.  
 
 # Conclusion
+I expected the song added by my sisters and I to have similar energy. This was almost correct, although most songs have pretty high energy, I added many songs with low energy as well. However, most songs are energetic, danceable and pretty loud. The combination of popular, nostalgic songs and our own music taste is well shown in the plots. The patterns are similar, but there are some aspects that represent our music taste. For me this was the high acoustic, low valence and low energy songs. Willemijn has proportional the most energetic songs. Lastly, Julia has proportional the highest valence songs. However, we all have the most songs in the high in popularity and danceability range. 
+
+I would say this playlist is a good representation of nostalgic songs all three of us enjoy listening to, combined with popular songs of the moment and a good taste of our own music preferences. Perfect to listen to during car rides, with enough different songs to never get bored of. This playlist made our vacation even better!
+
+
 
