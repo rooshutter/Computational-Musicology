@@ -341,7 +341,7 @@ clustering
 This plot is a dendrogram, a tree-like diagram that is used to represent the hierarchical clustering of songs in the playlist. The type of linkage that is used is average. Because the *On the road (again)* playlist consists of too many songs for clustering, only 10 songs are used from each person. 
 
 **Explanation**   
-The first thing that stands out, is that the songs are not clustered by who they are added. Another interesting aspect is that *Cajun Moon* by J.J. Cole is in its own cluster. If I really search for resemblance in the songs in the same cluster I can find some, but overall the clusters are pretty random. Songs from the same artist are not even in the same cluster, for example *Mercy* and *Stepping Stone* by Duffy are not even close. 
+The first thing that stands out, is that the songs are not clustered by who they are added. Another interesting aspect is that *Cajun Moon* by J.J. Cale is in its own cluster. If I really search for resemblance in the songs in the same cluster I can find some, but overall the clusters are pretty random. Songs from the same artist are not even in the same cluster, for example *Mercy* and *Stepping Stone* by Duffy are not even close. 
 
 ### Predicted most songs are added by Julia {data-commentary-width=400}
 ```{r}
