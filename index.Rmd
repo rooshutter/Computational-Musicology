@@ -357,9 +357,15 @@ This matrix shows the results of an algorithm for classification, called k-neare
 As shown in the matrix, 6 out of the 10 songs added by Julia are predicted to be added by her as well. The algorithm predicted that 8 more songs were added by Julia, but this was not the case. This could be the case because Julia added most nostalgic songs, and if we did too, the algorithm thought they were added by Julia. Half of the songs that are mine were predicted to be added by me. Only 2 songs that were added by Willemijn were predicted to be added by her. Her songs are pretty hard to predict. I think because she has some random songs that do not really line up with her music taste.  
 
 # Conclusion
+
+Row
+-----------------------------------------------------------------------
+
+### The perfect playlist {data-width=300}
 I expected the song added by my sisters and I to have similar energy. This was almost correct, although most songs have pretty high energy, I added many songs with low energy as well. However, most songs are energetic, danceable and pretty loud. The combination of popular, nostalgic songs and our own music taste is well shown in the plots. The patterns are similar, but there are some aspects that represent our music taste. For me this was the high acoustic, low valence and low energy songs. Willemijn has proportional the most energetic songs. Lastly, Julia has proportional the highest valence songs. However, we all have the most songs in the high in popularity and danceability range. 
 
 I would say this playlist is a good representation of nostalgic songs all three of us enjoy listening to, combined with popular songs of the moment and a good taste of our own music preferences. Perfect to listen to during car rides, with enough different songs to never get bored of. This playlist made our vacation even better!
 
-
+### A view of our vacation in Austria {data-width=700}
+![](berg.jpeg)
 
