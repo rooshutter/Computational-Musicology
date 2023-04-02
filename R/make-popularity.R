@@ -37,7 +37,9 @@ pop <- ggplot(otra,
     y = "Popularity",
     colour = "Energy",
     size = "Instrumentalness",
-    title = "Danceability, Popularity, Energy and Instrumentalness"
+    title = "Danceability, Popularity, Instrumentalness and Energy"
   )
+
+#ggplotly(pop, tooltip = "text")
 
 saveRDS(object = pop, file = "data/pop.RDS")

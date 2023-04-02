@@ -1,5 +1,5 @@
 ---
-title: "Portfolio"
+title: "On the road (again)"
 author: "Roos Hutter"
 date: "2023-02-22"
 output: 
@@ -47,14 +47,18 @@ Row
 ### About the corpus and the analysis {data-width=700}
 
 **The 'On the road (again)' corpus**  
-If you take car rides with your family often, you probably know the struggle: chosing music to listen to together. My siblings and I have had this struggle for multiple years, until we came across the option on Spotify to make shared playlists. Now, we make one everytime we go on vacation together, to avoid any conflicts. 
-
-For this computational musicological analysis I'm going to use one of the shared playlists. This playlist we used on vacation to Austria and it is called 'On the road (again)'. It contains different songs each of my sisters (Julia and Willemijn) and I (Roos). The focus for this portfolio will be on the differences and similarities between the songs each of us put in the playlist. I will also analyse songs that stand out. 
+If you take car rides with your family often, you probably know the struggle: choosing music to listen to together. My siblings and I have had this struggle for multiple years, until we came across the option on Spotify to make shared playlists. Now, we make one every time we go on vacation together, to avoid any conflicts.  
+For this computational musicological analysis, I'm going to use one of the shared playlists. This playlist we used on vacation to Austria and it is called *On the road (again)*. It contains different songs of my sisters (Julia and Willemijn) and I (Roos). The focus for this portfolio will be on the differences and similarities between the songs each of us put in the playlist. I will also analyze songs that stand out.  
+One important remark is that the amount of songs added by each of us is not the same. In fact it differs quite a lot as can be seen in the gauges presented down below. I decided to leave it this way and not remove songs to make the numbers equal, since by removing it might take out important differences or similarities as well.  
 
 **Expectations**  
-Since they are my sisters, and I've known them all my life, I do have so speculations about the music tastes. However, I think it will still be worth looking into what these differences and similarities exactly are. 
+Since they are my sisters, and I have known them all my life, I do have so speculations about the similarities and differences of the songs. However, I think it will still be worth looking into what these exactly are.  
+Since this playlist was made to listen to during car rides, I expect the songs to have somewhat of a similar sound and energy. For example I know we don't like to listen to classical music in the car, so I expect not to find any of that genre or with equivalent instrumentalness. Additionally, songs that are nostalgic to us appear in the playlist. When we were very young and our parents took us on road trips, we often listened to my parents' CD's of certain artists and it was often those same artists over and over again. Back then, I didn't really like those artists, however now I do and they feel very nostalgic to me and I think this is true for my sisters as well. Therefore, all three of us added songs of those certain artists, for example, Simply Red, George Michael, Duffy, Jack Johnson and Snow Patrol. We know that we like those artists and our parents do as well, which is a plus if we want to avoid any conflicts. Furthermore, we do influence each other’s music tastes and song choices. Occasionally, we 'steal' songs from each other. For example, I'm pretty sure I listened to *Do What I Want* by WizTheMc and *My Type* by Saint Motel first, but Julia added them to the playlist.  
+However, besides the similarities I do think there will be differences. I think these differences originate from our different music tastes. Julia's music taste is more build out of old classics. The music preferences of Willemijn mainly consists of rock-like songs. My music taste mostly includes pop and more acoustic songs. This playlist is made out of nostalgic songs, popular songs, and songs each of us listen to individually. Since our music preferences are different, I expect to find songs that represent those differences.  
 
-I think it will be interesting to analyze the different genres of the songs. Additionally, the energy the songs have is an interesting aspect to look more into. I expect the artists and release dates of the songs to be different. Also, the similarities between the songs will be interesting to discover. Since this playlist was made to listen to during car rides, I expect the songs to have somewhat of a similar sound. Furthermore, my sisters and I do influence each others music taste a little bit. I hope to discover more about who influences who and in what way exactly.
+**Songs**  
+Some songs stand out in the playlist. For example, some songs are duplicates. Spotify gives you a notification if you add a song to a playlist that already consists of that exact song. However, it doesn't give you it when you add a song that is the same as one that is already in the playlist, but from a different album. According to Spotify, it isn't the exact same song. Therefore the playlist has nine songs which are duplicates and added by different people. Side note: there are duplicates song added by the same people, but I won't be analyzing those, since it doesn't say anything about differences or similarities between my sisters and me.  
+Another song that stands out is *Crazy Little Thing Called Love* by Queen and its cover by Maroon 5. These songs are the only original and cover that are in the playlist.  
 
 
 ### On the road (again) {data-width=300}
@@ -89,7 +93,7 @@ gauge(341, min = 0, max = 609, gaugeSectors(
 
 # Visualisations {.storyboard}
 
-### Visualisation of the Acousticness {data-commentary-width=400}
+### The most negative, acoustic songs are added by me {data-commentary-width=400}
 
 ```{r}
 plot_acousticness <- readRDS(file = "data/plot_acousticness.RDS")
@@ -100,12 +104,15 @@ ggplotly(plot_acousticness, tooltip = "text")
 
 ***
 **Terminology**  
-This plot is a box plot about the acousticness of the songs added by Julia, Willemijn and Roos. Acousticness is a Spotify feature that ranges from 0.0 to 1.0. 1.0 represents high confidence that the track is acoustic.
+This plot is a representation of the valence, acousticness, loudness and energy of the songs added by Julia, Willemijn and Roos. They are all [Spotify audio features](https://developer.spotify.com/documentation/web-api/reference/get-audio-features). Valence describes the musical positiveness conveyed by a track. Acousticness is a pretty obvious measures, about how acoustic a song is. Loudness is about how loud a song sounds. It is represented through the size of the dots, how bigger the dot, how louder the track. Energy represents intensity and activity of songs.
 
-**Explanation**  
-You can clearly see that I have songs which are the most acoustic. It's interesting to see that Julia and Willemijn have similar acousticness.
+**Similarities**  
+One thing that stands out for each person is the resemblance between loudness and acousticness. The loudest songs, are almost all not acoustic at all. Evidently, this makes sense. Acoustic songs are made by using only natural sound and no electronics, which makes the sound softer. Another resemblance that is noticeable, is between energy and acousticness. The lower the energy, the higher the acousticness. This is the case because there is a connection between loudness and energy as well. We all have the most songs in the lower right square, which is low acousticness and high valence. Those songs are also with high loudness. I think this makes sense since we listen to the songs in the car on vacation and we mainly want to listen to happy, upbeat songs. 
 
-### Visualisation of the Energy, Danceability and Mode {data-commentary-width=400}
+**Differences**  
+A difference that really jumps out for me is in the songs that I added. There are a lot of songs in the top left square, which have high acousticness, low energy, low loudness and low valence. I think these songs are those that originated out of my own music taste. Naturally, the song with the lowest valence *Lo Vas A Olvidar* by Billie Eilish and ROSALÍA is one of mine. A song that really stands out is *Me & Mr Jones* by Amy Winehouse added by Julia. It had very high loudness for the amount of acousticness it has.
+
+### We all added many danceable, energetic and loud songs {data-commentary-width=400}
 
 ```{r}
 plot_evm <- readRDS(file = "data/plot_evm.RDS")
@@ -115,12 +122,15 @@ ggplotly(plot_evm, tooltip = "text")
 
 ***
 **Terminology**  
-This plot contains information about the energy, valence and mode of the songs added by Julia, Willemijn and Roos. Energy, valence and mode are all features from Spotify. Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy. Valence is a measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive, while tracks with low valence sound more negative. Mode indicates the modality (major or minor) of a track. Major is represented by 1 and minor is 0.
+This plot contains information about the energy, danceability, loudness and mode of the songs. They are all [Spotify audio features](https://developer.spotify.com/documentation/web-api/reference/get-audio-features). Energy and loudness are explained in the previous board. Loudness is again represented through the size of the dots. Danceability describes how suitable a track is for dancing and mode is the modality (major or minor) of a track.
 
-**Explanation**  
-I think it's interesting that the energy of most songs are high. However you can see that Willemijn has the most songs with high energy, which I expected. Another interesting point is that Julia and Willemijn have similarities between energy, valence and mode, their plot looks kind of the same. However mine (Roos) looks very different, my songs are more spread out and have less energy. 
+**Similarities** 
+In the car and especially on vacation, we want to listen to songs that gives us energy and happiness, are somewhat loud and make us want to tap along. This is very clear by the plot, most songs for all of us are in the top right square, high energy and danceability and have high loudness. I think most of the nostalgic and popular songs are in this part of the plot.
 
-### Populatiry {data-commentary-width=400}
+**Differences**  
+An interesting fact is that I added songs with the lowest energy. I think these songs come from my own preferences. However Julia and Willemijn do have lower energy song, not as nearly as low as mine. Willemijn added the song with the highest energy, *By the Way* by Red Hot Chili Peppers. Also, the song with the highest danceability is *Push The Button* by Sugababes is added by Julia. This song can be seen as one of the old songs Julia normally listens to, but also as one of the nostalgic songs.
+
+### *September* by Earth, Wind & Fire is not popular?! {data-commentary-width=400}
 
 ```{r}
 pop <- readRDS(file = "data/pop.RDS")
@@ -129,23 +139,29 @@ ggplotly(pop, tooltip = "text")
 ```
 ***
 **Terminology**  
+This plot contains information about the danceability, popularity, instrumentalness and energy of the songs. They are all [Spotify audio features](https://developer.spotify.com/documentation/web-api/reference/get-audio-features), except for [popularity](https://developer.spotify.com/documentation/web-api/reference/get-an-artists-top-tracks). Instrumentallness predicts whether a track contains no vocals. It is represented through the size of the dots, how bigger the dot, how higher the instrumentallness All the other audio features are explained in previous boards. Popularity is about how popular a track is now. The value will be between 0 and 100, with 100 being the most popular. 
 
-**Explanation**  
+**Similarities**  
+Popular songs are popular for a reason: a lot of people listen to them. So no surprise that my sisters and I did and do as well and added them to the *On the road (again)* playlist. Worth mentioning is that the popularity feature measure how popular a song is today, and not how popular it was when it came out. You can see that most songs added by us are in the upper part of the plot, so they have high popularity. I expected there to be popular song in playlist, which is the case. However, a lot of songs are lower in popularity than I expected. Perhaps, that's the case because they are nostalgic songs and therefore older songs who are not considered popular nowadays. Interestingly, there are quite a lot of songs with zero or almost zero popularity. *September* by Earth, Wind & Fire added by me, has a popularity of 0, which is quite surprising. For all of us, songs with high instrumentalness are pretty much everywhere in the plot and we all added around the same amount of them. I cannot notice a link between energy and the other features.
+
+**Differences**  
+To my surprise, I added the most songs with low popularity, but also the song with the highest popularity, namely *Starboy* by The Weeknd and Daft Punk. Julia and Willemijn both added *Cajun Moon* by J.J. Cale, but both from a different album. A very strange outcome is that the one added by Julia has a popularity of 58 and by Willemijn has 12, which is considerably lower. I think this is the case because Julia added one from the album *Okie*, which is released in 1974 and Willemijn from *Collected*, which is released in 2013. Therefore, Julia's song is the original released song.
+
 
 ### Chromagrams of two versions of Crazy Little Thing Called Love {data-commentary-width=400}
 ```{r, out.width="40%"}
 plot_chroma <- readRDS(file = "data/plot_chroma.RDS")
 plot_chroma2 <- readRDS(file = "data/plot_chroma2.RDS")
 
-subplot(plot_chroma, plot_chroma2, nrows = 2, margin = 0.04, heights = c(0.5, 0.5)) %>% layout(annotations = 
+subplot(plot_chroma2, plot_chroma, nrows = 2, margin = 0.04, heights = c(0.5, 0.5)) %>% layout(annotations = 
 list(list(x = 0.5,  y = 1.0,  
-          text = "Crazy Little Thing Called Love - Acoustic Version - Maroon 5",   
+          text = "Crazy Little Thing Called Love - Remastered 2011 - Queen",   
     xref = "paper",  
     yref = "paper",  
     xanchor = "center",  
     yanchor = "bottom",  
     showarrow = FALSE ),        list(x = 0.5, y = 0.46,  
-          text = "Crazy Little Thing Called Love - Remastered 2011 - Queen",   
+          text = "Crazy Little Thing Called Love - Acoustic Version - Maroon 5",   
     xref = "paper",  
     yref = "paper",  
     xanchor = "center",  
@@ -155,35 +171,46 @@ list(list(x = 0.5,  y = 1.0,
 ```
 
 ***
-**Terminology**  
-These are two chromagrams of the same song 'Crazy Little Thing Called Love', however one is sung by Maroon 5 and the other by Queen. Chromagrams are representations of the pitch content during a song.
-
-**Explanation**  
-The one from Maroon 5 is added by me and the one from Queen is added by Julia. In the beginning, the Maroon 5 one is a lot in pitch class A and Queen is a lot in D. However, around 50 there is a similar pattern in pitch class E for both songs.
-
-### Chroma vs Timbre of Acid Tears - Culi. {data-commentary-width=400}
 ```{r}
-plot_at_chroma <- readRDS(file = "data/plot_at_chroma.RDS")
-plot_at_timbre <- readRDS(file = "data/plot_at_timbre.RDS")
+#<iframe src="https://open.spotify.com/embed/track/6xdLJrVj4vIXwhuG8TMopk?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
-subplot(plot_at_chroma, plot_at_timbre) 
+#<iframe src="https://open.spotify.com/embed/track/5aYJ6gZyTFxZPAyTRRWKxP?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 ```
-*** 
+
 **Terminology**  
-These plots show the chroma (left) and timbre (right) of the song 'Acid Tears' by 'Culi.'.
+These are two chromagrams of the same song 'Crazy Little Thing Called Love', however one is the original by Queen and the other is a cover sung by Maroon 5. These songs is chosen, because they are the only origin and cover in the playlist. Queen and Maroon 5 are one of the nostalgic artists, that is probably the reason they were added to the playlist. I know that Julia was a really big fan of Maroon 5 and that she influenced us to listen to them too. Chromagrams are representations of the pitch content during a song. The lighter the blue, the higher the magnitude of that pitch.
 
-**Explanation**  
-It was added by me. The song is pretty consistent till about 2.45. This is shown well in the chromagram, at 165 the chroma changes. Before this point it was mostly C#, and after it is higher and switches between A#, G#, F# and F. This switch is also seen in the timbre, at the end the c02 is present.
+**Similarities**  
+The one from Maroon 5 is added by me and the one from Queen is added by Julia. The songs are quite the same in pitch throughout the whole song. Around 50, there is a similar pattern in pitch class E for both songs. Similarly, around 100. I'm not surprised the songs have a similar chroma, since they sound similar as well. 
 
-### Self-similarity matrices of Acid Tears - Culi. {data-commentary-width=400}
+**Differences**  
+In the beginning, the Maroon 5 song has pitch class A and D later than Queen's, who starts immediately with those classes. If you listen to the songs, you will understand why this is the case. Maroon 5's cover starts with some laughing, talking and counting, while Queen's starts immediately with the guitar melody. In the end, the songs differ as well. Queen's slowly gets softer while still playing the song, and Maroon 5's ends with the drums and guitar playing loud and stops quickly after that. This can be seen in the chromagrams, Queen's song get gradually less magnitude and Maroon 5's gets more magnitude in pitch class A# and then low magnitude in every class. 
+
 ```{r}
-bzt <- readRDS(file = "data/bzt.RDS")
+### Chroma vs Timbre of Acid Tears - Culi. {data-commentary-width=400}
+#plot_at_chroma <- readRDS(file = "data/plot_at_chroma.RDS")
+#plot_at_timbre <- readRDS(file = "data/plot_at_timbre.RDS")
 
-bind_rows(
-  bzt |> 
+#subplot(plot_at_chroma, plot_at_timbre) 
+
+#*** 
+#**Terminology**  
+#These plots show the chroma (left) and timbre (right) of the song 'Acid Tears' by 'Culi.'.
+
+#**Explanation**  
+#It was added by me. The song is pretty consistent till about 2.45. This is shown well in the chromagram, at 165 the chroma changes. Before this point it was mostly C#, and after it is higher and switches between A#, G#, F# and F. This switch is also seen in the timbre, at the end the c02 is present.
+```
+
+### *Enough Love* by Duffy is not consistent but *Push The Button* by the Sugababes is nothing but consistent {data-commentary-width=400}
+```{r}
+el <- readRDS(file = "data/el.RDS")
+ptb <- readRDS(file = "data/ptb.RDS")
+
+el_plot <- bind_rows(
+  el |> 
     compmus_self_similarity(pitches, "aitchison") |> 
     mutate(d = d / max(d), type = "Chroma"),
-  bzt |> 
+  el |> 
     compmus_self_similarity(timbre, "euclidean") |> 
     mutate(d = d / max(d), type = "Timbre")
 ) |>
@@ -200,50 +227,118 @@ bind_rows(
   geom_tile() +
   coord_fixed() +
   facet_wrap(~type) +
-  scale_fill_viridis_c(option = "E", guide = "none") +
   theme_classic() + 
-  labs(x = "", y = "", title="Self-similarity matrices")
+  theme(legend.position = "none") +
+  labs(x = "", y = "", title="Enough Love - Duffy")
+
+ptb_plot <- bind_rows(
+  ptb |> 
+    compmus_self_similarity(pitches, "aitchison") |> 
+    mutate(d = d / max(d), type = "Chroma"),
+  ptb |> 
+    compmus_self_similarity(timbre, "euclidean") |> 
+    mutate(d = d / max(d), type = "Timbre")
+) |>
+  mutate() |> 
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  facet_wrap(~type) +
+  theme_classic() + 
+  theme(legend.position = "none") +
+  labs(x = "", y = "", title="Push The Button - Sugababes")
+
+grid.arrange(el_plot, ptb_plot)
+
 ```
 
 ***
-These are self-similarity matrices of chroma and timbre of Acid Tears by Culi..
+```{r}
+#<iframe src="https://open.spotify.com/embed/track/00hzFg3J78uIchXYUJVa5U?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+
+#<iframe src="https://open.spotify.com/embed/track/4KktZd9BGHZjW3sK03O4zo?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+```
+
+**Terminology**  
+These are self-similarity matrices of chroma and timbre of *Enough Love* by Duffy added by me and *Push The Button* by Sugababes added by Julia. Self-similarity matrices are visual representations of the similarity between different segments of an audio signal. Chroma is about the pitch class and timbre distinguishes different types of musical instruments, voices, or sound sources. Dark diagonal lines mean repetitions in the song, a light bar means that something unusual happens and checkerboard blocks are similar structure throughout the song. These songs are chosen because *Enough Love* has the lowest danceability and *Push The Button* the highest in the playlist and I thought it is interesting to analyze these songs a bit more. Duffy and Sugababes are one of the nostalgic artists. Duffy was one of the artists that our parents would play in the car. 
+
+**Enough Love**  
+The first 50 seconds, *Enough Love* sounds different than the rest of the song. This can also be seen in the self-similarity matrices of chroma and timbre as a brighter bar going up and sideways. From 50 seconds to around 130, a checkerboard pattern can be seen in the chroma. This lines up with the song, Duffy sings *There must be enough love to go round the world* repetitively and similar pitch throughout that part. Around 65, a lighter bar appears in the chroma, which can be connected to the part where Duffy sings *The must be enough love, love, love*. Also around 110, there is a lighter bar in the chroma and the timbre, which is when she sings *I finally found*. Then around 130 seconds, a thicker brighter bar appears, which can be traced back to the lyric *The must be enough love, love, love*, some instrumental and Duffy singing *Woohoo*. 
+
+**Push The Button**  
+The self-similarity matrix of the chroma looks like a complete checkerboard block. The pitch throughout the whole song has similar structure. Little dark parallel lines can be seen, which indicated repetitions through the whole song. While listening to the song, you figure out that indeed, the song sounds very similar to other parts. In the self-similarity matrix of the timbre, different parts can be spotted. During the first 15 second, there are no vocals yet. This can be seen as a lighter bar in the beginning. Around 150, a light bar appears again. In the song, this connects to the lyrics *I've been dropping so many hints. And you're still not getting it. Now that you've heard everything I have to say. Where we gonna go from here?*  which sound distant, like it was recorded through voice mail. 
+
+**Differences**  
+Both songs sound very different, therefore the self-similarity matrices look nothing alike too. *Enough Love* consists of different parts, while *Push The Button* is mostly consistent.
+
 
 ### Chordogram {data-commentary-width=400}
 ```{r}
 queen_plot <- readRDS(file = "data/queen_plot.RDS")
 phil_plot <- readRDS(file = "data/phil_plot.RDS")
 
-subplot(queen_plot, phil_plot)
+grid.arrange(queen_plot, phil_plot, ncol=2)
 
 ```
 
 ***
-These are chordograms of Good Old-Fashioned Lover Boy by Queen (left) and Son of Man by Phil Collins (right)
+```{r}
+#<iframe src="https://open.spotify.com/embed/track/5AQpbyFoQmkOVwmlhKN4ii?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+
+#<iframe src="https://open.spotify.com/embed/track/43niiTshfUdTN32wHykv7h?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+
+```
+**Terminology**  
+These are chordograms of *Cajun Moon* by J.J. Cale and *Call me The Breeze* by J.J. Cale. A chordogram is a visual representation of the chord content during a song. The darker the blue, the higher the magnitude of that chord. Both songs were added twice by Julia and Willemijn, but from a different album. This is the reason for more inspection of the songs. J.J. Cale is one of the nostalgic artists, our dad would listen to him a lot. That's why Julia and Willemijn added both songs to the playlist.
+
+**Similarities**  
+Since these songs are from the same artist, the chords used are also similar. J.J. Cale used Eb and Ab in both songs. In *Call Me The Breeze*, chord Gb is also used. Both songs have consistent use of the same chords.
 
 ### Tempogram {data-commentary-width=400}
 ```{r}
 tempogram1 <- readRDS(file = "data/tempogram1.RDS")
 tempogram2 <- readRDS(file = "data/tempogram2.RDS")
 tempogram3 <- readRDS(file = "data/tempogram3.RDS")
-tempogram4 <- readRDS(file = "data/tempogram4.RDS")
 
+grid.arrange(tempogram1, tempogram2, tempogram3, ncol = 2)
 
-grid.arrange(tempogram1, tempogram2, tempogram3, tempogram4, ncol = 2)
 ```
 
 ***
-These are four Fourier-based tempograms. A tempogram shows the tempo of a music piece over time. Viva La Vida by Coldplay and Good Old-Fashioned Lover Boy by Queen is added by Julia, King of Everything by Dominic Fike is added by Willemijn and my future by Billie Eilish is added by me (Roos). 
+```{r}
+#<iframe src="https://open.spotify.com/embed/track/4cluDES4hQEUhmXj6TXkSo?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+
+#<iframe src="https://open.spotify.com/embed/track/2Dpe2dH0Dvj2iVnDQvMv1E?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+
+#<iframe src="https://open.spotify.com/embed/track/1znGxpojJSjxZZEWA5zWva?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+```
+
+**Terminology**  
+These are three Fourier-based tempograms. A tempogram shows the tempo of a music piece over time. However, tempo is hard feature to analyze, since the tempograms often do not line up with the songs. *What Makes You Beautiful* by One Direction is added by Julia, *Still Counting* is added by Willemijn and *Stutter* by Maroon 5 is added by me. These songs were chosen because they all have high loudness and.  
+
+**Similarities**  
+*What Makes You Beautiful* and *Stutter* have clear lines throughout the whole song, but *Still Counting* does not. The first two have consistent tempo during the whole song and have very clear drum and rhythm. I would even argue that they have very similar tempo. However the tempogram of *Still Counting* looks a lot messier. At around 50 seconds, the song going over to a instrumental guitar part, which is noticeable in the tempogram. One Direction and Maroon 5 are artists that are nostalgic to all of us. Volbeat however, is a clear example of one of Willemijn's rock songs.
+
 
 ### Clustering {data-commentary-width=400}
 ```{r}
-#clustering <- readRDS(file = "data/clustering.RDS")
-
+clustering <- readRDS(file = "data/clustering.RDS")
+clustering
 ```
 
 ***
 **Terminology**  
 
 **Explanation**  
-kljfklsdjf
+
 
 # Conclusion
+

@@ -46,4 +46,6 @@ plot_evm <- ggplot(otra_evm,
     title = "Energy, Danceability, Loudness and Mode"
   )
 
+#ggplotly(plot_evm, tooltip = "text")
+
 saveRDS(object = plot_evm, file = "data/plot_evm.RDS")

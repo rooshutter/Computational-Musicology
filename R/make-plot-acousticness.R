@@ -3,22 +3,17 @@
 #  labs(x = '', y = "Acousticness", title = "Acousticness") +
 #  theme_light()
 
-otra_evm <- otra %>%
-  mutate(
-    mode = ifelse(mode == 0, "Minor", "Major")
-  )
-
-plot_acousticness <- ggplot(otra_evm,
+plot_acousticness <- ggplot(otra,
                    aes(
                      x = valence,
                      y = acousticness,
                      size = loudness,
-                     colour = mode, 
+                     colour = energy, 
                      text = paste("Track: ", track.name, "<br>",
                                   "Valence: ", valence, "<br>",
                                   "Acousticness: ", acousticness, "<br>",
                                   "Loudness: ", loudness, "<br>",
-                                  "Mode: ", mode, "<br>"
+                                  "Energy: ", energy, "<br>"
                    )
 )) +
   geom_point() +              # Scatter plot.
@@ -34,9 +29,8 @@ plot_acousticness <- ggplot(otra_evm,
     breaks = c(0, 0.50, 1),
     minor_breaks = NULL
   ) +
-  scale_colour_brewer(        # Use the Color Brewer to choose a palette.
-    type = "qual",            # Qualitative set.
-    palette = "Paired"        # Name of the palette is 'Paired'.
+  scale_colour_continuous(        # Use the Color Brewer to choose a palette.
+    type = "gradient"        # Name of the palette is 'Paired'.
   ) +
   scale_size_continuous(      # Fine-tune the sizes of each point.
     trans = "exp",            # Use an exp transformation to emphasise loud.
@@ -46,8 +40,10 @@ plot_acousticness <- ggplot(otra_evm,
   labs(                       # Make the titles nice.
     x = "Valence",
     y = "Acousticness",
-    colour = "Mode",
-    title = "Valence, Acousticness, Loudness and Mode"
+    colour = "Energy",
+    title = "Valence, Acousticness, Loudness and Energy"
   )
+
+#ggplotly(plot_acousticness, tooltip = "text")
 
 saveRDS(object = plot_acousticness, file = "data/plot_acousticness.RDS")

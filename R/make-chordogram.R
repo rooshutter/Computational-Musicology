@@ -86,8 +86,8 @@ key_templates <-
     "D#:min", circshift(minor_key, 3)
   )
 
-queen <-
-  get_tidy_audio_analysis("1n7xFAY4xoPeqRvrkzAtsw") |>
+cm <-
+  get_tidy_audio_analysis("43niiTshfUdTN32wHykv7h") |>
   compmus_align(bars, segments) |>
   select(bars) |>
   unnest(bars) |>
@@ -99,7 +99,7 @@ queen <-
       )
   )
 
-queen_plot <- queen |> 
+queen_plot <- cm |> 
   compmus_match_pitch_template(
     chord_templates,         # Change to chord_templates if descired
     method = "euclidean",  # Try different distance metrics
@@ -109,13 +109,13 @@ queen_plot <- queen |>
     aes(x = start + duration / 2, width = duration, y = name, fill = d)
   ) +
   geom_tile() +
-  scale_fill_viridis_c(guide = "none") +
-  scale_y_discrete(guide = guide_axis(n.dodge=2)) +
+  scale_y_discrete(guide = guide_axis(n.dodge=2)) + 
   theme_minimal() +
-  labs(x = "Time (s)", y = "", title="Good Old-Fashioned Lover Boy - Queen") 
+  theme(legend.position = "none") +
+  labs(x = "Time (s)", y = "", title="Cajun Moon - J.J. Cale") 
 
-phil <-
-  get_tidy_audio_analysis("5A0JhLTAvwCed9HIP66X7u") |>
+cmtb <-
+  get_tidy_audio_analysis("5AQpbyFoQmkOVwmlhKN4ii") |>
   compmus_align(bars, segments) |>
   select(bars) |>
   unnest(bars) |>
@@ -127,7 +127,7 @@ phil <-
       )
   )
 
-phil_plot <- phil |> 
+phil_plot <- cmtb |> 
   compmus_match_pitch_template(
     chord_templates,         # Change to chord_templates if descired
     method = "euclidean",  # Try different distance metrics
@@ -137,10 +137,10 @@ phil_plot <- phil |>
     aes(x = start + duration / 2, width = duration, y = name, fill = d)
   ) +
   geom_tile() +
-  scale_fill_viridis_c(guide = "none") +
-  scale_y_discrete(guide = guide_axis(n.dodge=2)) +
+  scale_y_discrete(guide = guide_axis(n.dodge=2)) + 
   theme_minimal() +
-  labs(x = "Time (s)", y = "", title="Son of Man - Phil Collins") 
+  theme(legend.position = "none") +
+  labs(x = "Time (s)", y = "", title="Call Me The Breeze - J.J. Cale") 
 
 saveRDS(object = queen_plot, file = "data/queen_plot.RDS")
 saveRDS(object = phil_plot, file = "data/phil_plot.RDS")

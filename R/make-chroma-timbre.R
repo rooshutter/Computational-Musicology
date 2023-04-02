@@ -1,3 +1,16 @@
+library(flexdashboard)
+library(readr)
+library(leaflet)
+library(DT)
+library(tidyverse)
+library(lubridate)
+library(plotly)
+library(spotifyr)
+library(Cairo)
+library(compmus)
+
+color_scale <- scale_color_gradient(low = "#c1c8d7", high = "#1e2d4b", guide = guide_colorbar(title = "Magnitude"))
+
 at_chroma <-
   get_tidy_audio_analysis("5YCXiEpUqblYW5x9vWx8Qd") |>
   select(segments) |>
@@ -15,10 +28,10 @@ plot_at_chroma <-
            fill = value
          )
   ) +
+  color_scale +
   geom_tile() +
   labs(x = "Chroma", y = NULL, fill = "Magnitude") +
-  theme_minimal() +
-  scale_fill_viridis_c() 
+  theme_minimal()
 
 at_timbre <-
   get_tidy_audio_analysis("5YCXiEpUqblYW5x9vWx8Qd") |> # Change URI.
@@ -49,10 +62,12 @@ plot_at_timbre <-
            fill = value
          )
   ) +
+  color_scale +
   geom_tile() +
   labs(x = "Timbre", y = NULL, fill = "Magnitude") +
-  scale_fill_viridis_c() +                              
   theme_classic()
+
+subplot(plot_at_chroma, plot_at_timbre) 
 
 saveRDS(object = plot_at_chroma, file = "data/plot_at_chroma.RDS")
 saveRDS(object = plot_at_timbre, file = "data/plot_at_timbre.RDS")
